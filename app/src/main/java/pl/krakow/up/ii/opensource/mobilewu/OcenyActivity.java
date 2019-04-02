@@ -2,7 +2,9 @@ package pl.krakow.up.ii.opensource.mobilewu;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -19,6 +21,9 @@ import org.jsoup.nodes.Element;
 import org.riversun.okhttp3.OkHttp3CookieHelper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,11 +40,10 @@ import org.riversun.okhttp3.OkHttp3CookieHelper;
 public class OcenyActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-
     TextView textView = null;
-    Button textBtn = null;
+    List<String> list = new ArrayList<>();
     ListView listView;
-    String[] listValue;
+    String[] listValue = new String[]{"1","2","3","4","5","6","7","8"};
     final String page_url = "https://wu.up.krakow.pl/WU/";
 
     final OkHttpClient client = new OkHttpClient().newBuilder()
@@ -49,6 +53,8 @@ public class OcenyActivity extends AppCompatActivity {
             .build();
 
     class NetworkTask extends AsyncTask<String, Integer, String> {
+
+        final ProgressBar simpleProgressBar = findViewById(R.id.progressBarOceny);
 
         @Override
         protected String doInBackground(String... strings) {
@@ -97,37 +103,49 @@ public class OcenyActivity extends AppCompatActivity {
                     Log.e("--td -- ", td.text());
                 }
             }
-
-            //Pattern compiledPattern = Pattern.compile("tbody");
-            //Matcher matcher = compiledPattern.matcher(body);
-            //textView.setText(matcher.toString());
-            //System.out.println("\n To jest print body: "+matcher.toString()+"    : no i tak\n");
-            //String[] wynik = body.split("<tbody><tr class=\"gridDaneHead\" valign=\"bottom\">");
-            //for(String w : wynik){
-            //System.out.println("\n To jest print body: "+w+"    : no i tak\n");
-            //textView.setText(w);}
             System.out.println("BODY: "+document);
             String szukacz1 = "<table class=\"gridPadding fill\" cellspacing=\"0\" cellpadding=\"0\" rules=\"all\" border=\"1\" id=\"ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane\">";
             String szukacz2 = "</table>";
-            int p1, p2;
+            String result = null;
+
             for (int i = 0; i < doc.toString().length(); i++) {
-                p1 = document.indexOf(szukacz1);
-                p2 = document.indexOf(szukacz2);
-                System.out.println("\n\n\n\n"+p1+" "+p2+"\n\n\n\n");
-                if (p1 > 0 && p2 > 0) {
+                System.out.println("\n\n\n\n\n\n\n\n");
+                if (document.contains(szukacz1) && document.contains(szukacz2)) {
                     System.out.println("Szukane frazy wystepują na pozycji: ");
-                    System.out.println(+(p1 + 1) + " oraz: " + (p2 + 1));
-                    System.out.println("\n" + document.substring((p1), (p2)));
-                    textView.setText(document.substring((p1), (p2)));
+                    System.out.println(+(document.indexOf(szukacz1) + 1) + " oraz: " + (document.indexOf(szukacz1) + 1));
+                    System.out.println("\n" + document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz1))));
+                    result=document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz2)));
+
+
                     break;
                 } else {
                     System.out.println("Szukana fraza nie wystepuje");
                     break;
                 }
             }
-
+            if (result != null){
+                result.trim();
+                String[] tabBadString = new String[]{"<tr","tbody","\n","/tr","/td","td","table"};
+                StringTokenizer stringTokenizer = new StringTokenizer(result);
+                int p=0;
+                while (stringTokenizer.hasMoreTokens()) {
+                    String t=stringTokenizer.nextToken("><");
+                    for (String s: tabBadString){
+                        if (!t.contains(s)){ p+=1; }
+                    }
+                    if (p==tabBadString.length){ list.add(t);/*System.out.println("token: "+t);*/}
+                    p=0;
+                }
+                System.out.println("\n\n\n");
+                simpleProgressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
+                for (int j=0;j<list.size();j++){System.out.println(list.get(j));}
+                for (int j=0;j<8;j++){listValue[j]=list.get(j+1);}
+                for (String s:listValue){System.out.println(s);}
+                //textView.setText(list.get(1));
+                //textView.invalidate();
+            }
         }
-
     }
 
 
@@ -135,12 +153,12 @@ public class OcenyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oceny);
-
-
-        textBtn = findViewById(R.id.btnOceny);
         textView = findViewById(R.id.tvOceny);
+        listView = (ListView)findViewById(R.id.lvMenuOceny);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_list_view, R.id.textView, listValue);
+        listView.setAdapter(adapter);
 
-        String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + "login" + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + "password"
+        String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + "login" + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + "haslo"
                 + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj"
                 + "&__VIEWSTATE=%2FwEPDwUKMTgxMTA3NTE0Mw8WAh4DaGFzZRYCZg9kFgJmD2QWAgIBD2QWBAICD2QWAgIBD2QWAgIBD2QWAgICDxQrAAIUKwACDxYEHgtfIURhdGFCb3VuZGceF0VuYWJsZUFqYXhTa2luUmVuZGVyaW5naGRkZGQCBA9kFgICAw9kFg4CAQ8WAh4JaW5uZXJodG1sBS1XaXJ0dWFsbmEgVWN6ZWxuaWE8IS0tIHN0YXR1czogNzcyMjA2MTI1IC0tPiBkAg0PDxYCHgRNb2RlCyolU3lzdGVtLldlYi5VSS5XZWJDb250cm9scy5UZXh0Qm94TW9kZQJkZAIVDw8WAh4EVGV4dAUZT2R6eXNraXdhbmllIGhhc8WCYTxiciAvPmRkAhcPDxYCHgdWaXNpYmxlaGQWAgIDDxBkDxYCZgIBFgIFB3N0dWRlbnQFCGR5ZGFrdHlrFgFmZAIZD2QWBAIBDw8WAh8FBTQ8YnIgLz5MdWIgemFsb2d1aiBzacSZIGpha28gc3R1ZGVudCBwcnpleiBPZmZpY2UzNjU6ZGQCAw8PFgIfBQUIUHJ6ZWpkxbpkZAIbDw8WBB8FBRhTZXJ3aXMgQWJzb2x3ZW50w7N3PGJyLz4fBmhkZAIfDw8WAh8GaGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBUpjdGwwMCRjdGwwMCRUb3BNZW51UGxhY2VIb2xkZXIkVG9wTWVudUNvbnRlbnRQbGFjZUhvbGRlciRNZW51VG9wMyRtZW51VG9wM71u5cvxo3%2F6OarM3JXDhn%2F9bImN&__VIEWSTATEGENERATOR=7D6A02AE";
         NetworkTask task = new NetworkTask();

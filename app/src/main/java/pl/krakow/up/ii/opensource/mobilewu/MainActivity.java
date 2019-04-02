@@ -91,11 +91,14 @@ public class MainActivity extends AppCompatActivity {
             if (e != null) {
                 for (Element td : e.getElementsByTag("td")) {
                     Log.e("--td -- ", td.text());
+
                 }
+
             }
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             finish();
-             startActivity(intent);
+            startActivity(intent);
+
         }
 
     }

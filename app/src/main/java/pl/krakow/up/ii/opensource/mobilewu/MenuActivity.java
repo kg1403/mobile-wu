@@ -28,8 +28,9 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        listView = (ListView)findViewById(R.id.listView1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2, android.R.id.text1, listValue);
+        listView = (ListView)findViewById(R.id.lvMenu);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_list_view, R.id.textView, listValue);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

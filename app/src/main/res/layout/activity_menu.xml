@@ -4,16 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MenuActivity">
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/lvMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-
-        >
-    </ListView>
+        android:layout_marginTop="50pt"/>
 
 </RelativeLayout>

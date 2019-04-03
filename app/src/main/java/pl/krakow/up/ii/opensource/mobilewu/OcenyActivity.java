@@ -32,7 +32,7 @@ import okhttp3.Response;
 public class OcenyActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-    public static int anInt = 0;
+
     TextView textView = null;
     List<String> list = new ArrayList<>();
     ListView listView;
@@ -110,14 +110,13 @@ public class OcenyActivity extends AppCompatActivity {
                     System.out.println(+(document.indexOf(szukacz1) + 1) + " oraz: " + (document.indexOf(szukacz1) + 1));
                     //System.out.println("\n" + document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz1))));
                     result=document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz2)));
-
-
                     break;
                 } else {
                     System.out.println("Szukana fraza nie wystepuje");
                     break;
                 }
             }
+
             /* //Wybiera nazwy kolumn
             if (result != null){
                 result.trim();
@@ -169,11 +168,9 @@ public class OcenyActivity extends AppCompatActivity {
                         listValue[p2]=list.get(j) + "\n" + list.get(j+1);
                         p2+=1;
                     }
-
                 }
-                for (String s:listValue){System.out.println(s);}
+ for (String s:listValue){System.out.println(s);}
                 simpleProgressBar.setVisibility(View.INVISIBLE);
-                anInt =1;
                 Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
                 //textView.setText(list.get(1));
 
@@ -197,17 +194,7 @@ public class OcenyActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_list_view_oceny, R.id.textViewOceny, listValue);
         gridView.setAdapter(adapter);
 
-
-
-        if (anInt==1){
-            adapter.notifyDataSetChanged();
-            System.out.println("\nAdapter wysłany ponownie\n");
-            //listView.setAdapter(adapter);
-        }
-
-
-
-        String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + "raz" + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + "dewa"
+        String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + "login" + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + "haslo"
                 + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj"
                 + "&__VIEWSTATE=%2FwEPDwUKMTgxMTA3NTE0Mw8WAh4DaGFzZRYCZg9kFgJmD2QWAgIBD2QWBAICD2QWAgIBD2QWAgIBD2QWAgICDxQrAAIUKwACDxYEHgtfIURhdGFCb3VuZGceF0VuYWJsZUFqYXhTa2luUmVuZGVyaW5naGRkZGQCBA9kFgICAw9kFg4CAQ8WAh4JaW5uZXJodG1sBS1XaXJ0dWFsbmEgVWN6ZWxuaWE8IS0tIHN0YXR1czogNzcyMjA2MTI1IC0tPiBkAg0PDxYCHgRNb2RlCyolU3lzdGVtLldlYi5VSS5XZWJDb250cm9scy5UZXh0Qm94TW9kZQJkZAIVDw8WAh4EVGV4dAUZT2R6eXNraXdhbmllIGhhc8WCYTxiciAvPmRkAhcPDxYCHgdWaXNpYmxlaGQWAgIDDxBkDxYCZgIBFgIFB3N0dWRlbnQFCGR5ZGFrdHlrFgFmZAIZD2QWBAIBDw8WAh8FBTQ8YnIgLz5MdWIgemFsb2d1aiBzacSZIGpha28gc3R1ZGVudCBwcnpleiBPZmZpY2UzNjU6ZGQCAw8PFgIfBQUIUHJ6ZWpkxbpkZAIbDw8WBB8FBRhTZXJ3aXMgQWJzb2x3ZW50w7N3PGJyLz4fBmhkZAIfDw8WAh8GaGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBUpjdGwwMCRjdGwwMCRUb3BNZW51UGxhY2VIb2xkZXIkVG9wTWVudUNvbnRlbnRQbGFjZUhvbGRlciRNZW51VG9wMyRtZW51VG9wM71u5cvxo3%2F6OarM3JXDhn%2F9bImN&__VIEWSTATEGENERATOR=7D6A02AE";
         NetworkTask task = new NetworkTask();

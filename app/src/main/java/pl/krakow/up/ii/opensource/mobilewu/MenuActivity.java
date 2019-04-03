@@ -30,7 +30,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         listView = (ListView)findViewById(R.id.lvMenu);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_list_view, R.id.textView, listValue);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_list_view_menu, R.id.textViewMenu, listValue);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

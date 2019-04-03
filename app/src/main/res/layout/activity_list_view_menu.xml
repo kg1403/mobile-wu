@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewMenu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="10pt"
         android:textAlignment="center"
         android:textColor="#000"
-        android:textSize="10pt"
-        android:padding="10pt"/>
+        android:textSize="10pt" />
+
 </LinearLayout>

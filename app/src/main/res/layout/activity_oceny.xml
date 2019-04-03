@@ -6,11 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MenuActivity">
 
-    <ListView
-        android:id="@+id/lvMenuOceny"
-        android:layout_width="match_parent"
+    <GridView
+        android:id="@+id/gvOceny"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50pt" />
+        android:columnWidth="90dp"
+        android:numColumns="2"
+        android:padding="1dp"
+        android:gravity="center"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"/>
 
     <TextView
         android:id="@+id/tvOceny"

@@ -30,6 +30,8 @@
         android:layout_marginTop="164dp"
         android:text="TextView"
         android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,6 +43,8 @@
         android:layout_marginTop="40dp"
         android:text="TextView"
         android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWystawil" />
 
@@ -52,6 +56,8 @@
         android:layout_marginTop="40dp"
         android:text="TextView"
         android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLiczbaGodzin" />
 
@@ -63,6 +69,8 @@
         android:layout_marginTop="40dp"
         android:text="TextView"
         android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTermin" />
 
@@ -74,70 +82,67 @@
         android:layout_marginTop="40dp"
         android:text="TextView"
         android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPoprawkowy" />
 
     <TextView
-        android:id="@+id/tvETCS"
+        android:id="@+id/tvEtcs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginTop="40dp"
         android:text="TextView"
         android:textAlignment="textEnd"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvKomisyjny" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        android:textAlignment="textEnd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvETCS" />
 
     <TextView
         android:id="@+id/tvWystawilEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="164dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvWystawil"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvWystawil"
+        app:layout_constraintStart_toEndOf="@+id/tvWystawil" />
 
     <TextView
         android:id="@+id/tvPoprawkowyEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvPoprawkowy"
-        app:layout_constraintTop_toBottomOf="@+id/tvTerminEdit" />
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvPoprawkowy"
+        app:layout_constraintStart_toEndOf="@+id/tvPoprawkowy" />
 
     <TextView
         android:id="@+id/tvLiczbaGodzinEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvLiczbaGodzin"
-        app:layout_constraintTop_toBottomOf="@+id/tvWystawilEdit" />
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLiczbaGodzin"
+        app:layout_constraintStart_toEndOf="@+id/tvLiczbaGodzin" />
 
     <TextView
         android:id="@+id/tvTerminEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvTermin"
-        app:layout_constraintTop_toBottomOf="@+id/tvLiczbaGodzinEdit" />
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvTermin"
+        app:layout_constraintStart_toEndOf="@+id/tvTermin" />
 
     <TextView
         android:id="@+id/tvKomisyjnyEdit"
@@ -146,6 +151,8 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="40dp"
         android:text="TextView"
+        android:textAlignment="textStart"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/tvKomisyjny"
         app:layout_constraintTop_toBottomOf="@+id/tvPoprawkowyEdit" />
 
@@ -154,18 +161,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/tvETCS"
-        app:layout_constraintTop_toBottomOf="@+id/tvKomisyjnyEdit" />
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvEtcs"
+        app:layout_constraintStart_toEndOf="@+id/tvEtcs" />
 
-    <TextView
-        android:id="@+id/textView11Edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/tvEtcsEdit" />
 </android.support.constraint.ConstraintLayout>

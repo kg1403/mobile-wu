@@ -1,5 +1,6 @@
 package pl.krakow.up.ii.opensource.mobilewu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -38,6 +39,13 @@ public class OcenyActivity extends AppCompatActivity {
     ListView listView;
     GridView gridView;
     String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValueWystawil = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValueGodziny= new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValueTerminI = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValuePoprawkowy = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValueKomisyjny = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValueEtcs = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    String[] listValueTyp = new String[]{"1","2","3","4","5","6","7","8"};
     final String page_url = "https://wu.up.krakow.pl/WU/";
 
 
@@ -163,13 +171,27 @@ public class OcenyActivity extends AppCompatActivity {
                 //for (int j=0;j<list.size();j++){System.out.println(list.get(j));}
                 //wybranie poszczegolnych elementow listy
                 for (int j=0;j<list.size();j++){
-                    if (j>0 && j+1<=list.size() && list.get(j-1).equals("tr class=\"gridDane\"")){
+                    if (j>0 && j+7<=list.size() && list.get(j-1).equals("tr class=\"gridDane\"")){
                         System.out.println(list.get(j));
                         listValue[p2]=list.get(j) + "\n" + list.get(j+1);
+                        listValueWystawil[p2]=list.get(j+2);
+                        listValueGodziny[p2]=list.get(j+3);
+                        listValueTerminI[p2]=list.get(j+4);
+                        listValuePoprawkowy[p2]=list.get(j+5);
+                        listValueKomisyjny[p2]=list.get(j+6);
+                        listValueEtcs[p2]=list.get(j+7);
                         p2+=1;
                     }
                 }
- for (String s:listValue){System.out.println(s);}
+                for (int j=0;j<8;j++){listValueTyp[j]=list.get(j+1);}
+                //wybranie poszczegolnych elementow listy
+                for (String s:listValueWystawil){System.out.println(s);}
+                for (String s:listValueGodziny){System.out.println(s);}
+                for (String s:listValueTerminI){System.out.println(s);}
+                for (String s:listValuePoprawkowy){System.out.println(s);}
+                for (String s:listValueKomisyjny){System.out.println(s);}
+                for (String s:listValue){System.out.println(s);}
+
                 simpleProgressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
                 //textView.setText(list.get(1));
@@ -199,6 +221,23 @@ public class OcenyActivity extends AppCompatActivity {
                 + "&__VIEWSTATE=%2FwEPDwUKMTgxMTA3NTE0Mw8WAh4DaGFzZRYCZg9kFgJmD2QWAgIBD2QWBAICD2QWAgIBD2QWAgIBD2QWAgICDxQrAAIUKwACDxYEHgtfIURhdGFCb3VuZGceF0VuYWJsZUFqYXhTa2luUmVuZGVyaW5naGRkZGQCBA9kFgICAw9kFg4CAQ8WAh4JaW5uZXJodG1sBS1XaXJ0dWFsbmEgVWN6ZWxuaWE8IS0tIHN0YXR1czogNzcyMjA2MTI1IC0tPiBkAg0PDxYCHgRNb2RlCyolU3lzdGVtLldlYi5VSS5XZWJDb250cm9scy5UZXh0Qm94TW9kZQJkZAIVDw8WAh4EVGV4dAUZT2R6eXNraXdhbmllIGhhc8WCYTxiciAvPmRkAhcPDxYCHgdWaXNpYmxlaGQWAgIDDxBkDxYCZgIBFgIFB3N0dWRlbnQFCGR5ZGFrdHlrFgFmZAIZD2QWBAIBDw8WAh8FBTQ8YnIgLz5MdWIgemFsb2d1aiBzacSZIGpha28gc3R1ZGVudCBwcnpleiBPZmZpY2UzNjU6ZGQCAw8PFgIfBQUIUHJ6ZWpkxbpkZAIbDw8WBB8FBRhTZXJ3aXMgQWJzb2x3ZW50w7N3PGJyLz4fBmhkZAIfDw8WAh8GaGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBUpjdGwwMCRjdGwwMCRUb3BNZW51UGxhY2VIb2xkZXIkVG9wTWVudUNvbnRlbnRQbGFjZUhvbGRlciRNZW51VG9wMyRtZW51VG9wM71u5cvxo3%2F6OarM3JXDhn%2F9bImN&__VIEWSTATEGENERATOR=7D6A02AE";
         NetworkTask task = new NetworkTask();
         task.execute(page_url + "Logowanie2.aspx?returnUrl=/WU/OcenyP.aspx", bodyParams);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(OcenyActivity.this, OcenySecondActivity.class);
+                intent.putExtra("IdNazwa",position);
+                intent.putExtra("Nazwa",listValue[position]);
+                intent.putExtra("Wystawil",listValueWystawil[position]);
+                intent.putExtra("Godziny",listValueGodziny[position]);
+                intent.putExtra("TerminI",listValueTerminI[position]);
+                intent.putExtra("Poprawkowy",listValuePoprawkowy[position]);
+                intent.putExtra("Komisyjny",listValueKomisyjny[position]);
+                intent.putExtra("ETCS",listValueEtcs[position]);
+                intent.putExtra("Typ",listValueTyp);
+                startActivity(intent);
+            }
+        });
 
 
     }

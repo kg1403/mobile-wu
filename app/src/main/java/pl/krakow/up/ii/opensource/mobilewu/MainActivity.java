@@ -1,6 +1,5 @@
 package pl.krakow.up.ii.opensource.mobilewu;
 
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -35,13 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     final String page_url = "https://wu.up.krakow.pl/WU/";
 
-    final OkHttpClient client = new OkHttpClient().newBuilder()
-            //   .followRedirects(false)
-            //   .followSslRedirects(false)
-            .cookieJar(cookieHelper.cookieJar())
-            .build();
-
-    class NetworkTask extends AsyncTask<String, Integer, String> {
+    //klasa służąca do wysyłania zapytań do strony z wykorzystaniem cookies
+    class PostLoginTask extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -56,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     .addHeader("cache-control", "no-cache")
                     .build();
 
-            try (Response response = client.newCall(request).execute()) {
+            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {
                 Log.e("tag", response.message().toString());
                 try {
                     //System.out.println("\n To jest print: "+response.body().string()+"    : no i tak\n");
@@ -67,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                Toast.makeText(MainActivity.this,"Błąd sesji",Toast.LENGTH_SHORT).show();
             }
             return null;
         }
@@ -78,29 +73,40 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Element blad = doc.getElementById("ctl00_ctl001_ContentPlaceHolder_MiddleContentPlaceHolder_lblMessage");
                 if (blad != null) {
-                    Toast.makeText(MainActivity.this, blad.text(), Toast.LENGTH_SHORT)
-                            .show();
-                    Log.e("tag", blad.text()); //tu byl komentarz
+                    Toast.makeText(MainActivity.this, blad.text(), Toast.LENGTH_SHORT).show();
+                    //Log.e("tag", blad.text());
                     return;
                 }
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                finish();
+                startActivity(intent);
             } catch (Exception e) {
                 Log.e("tag", "jest blad");
                 e.printStackTrace();
             }
-            Element e = doc.getElementById("ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_tab");
-            if (e != null) {
-                for (Element td : e.getElementsByTag("td")) {
-                    Log.e("--td -- ", td.text());
-
-                }
-
-            }
-            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-            finish();
-            startActivity(intent);
-
         }
+    }
+    //klasa służąca do pobierania zawartości strony z wykorzystaniem cookies
+    class GetLoginTask extends AsyncTask<Void, Integer, Void>{  //w przyszłości użyty np do pobrania błędów)
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Request request = new Request.Builder()
+                    .url(page_url + "Logowanie2.aspx")
+                    .get()
+                    .build();
+            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {
+                Log.e("tag", response.message());
+                try {
+                    Log.e("tag", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
 
@@ -118,12 +124,11 @@ public class MainActivity extends AppCompatActivity {
             String slogin = login.getText().toString();
             String spass = pass.getText().toString();
             simpleProgressBar.setVisibility(View.VISIBLE);
-
             String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + slogin + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + spass
                     + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj"
                     + "&__VIEWSTATE=%2FwEPDwUKMTgxMTA3NTE0Mw8WAh4DaGFzZRYCZg9kFgJmD2QWAgIBD2QWBAICD2QWAgIBD2QWAgIBD2QWAgICDxQrAAIUKwACDxYEHgtfIURhdGFCb3VuZGceF0VuYWJsZUFqYXhTa2luUmVuZGVyaW5naGRkZGQCBA9kFgICAw9kFg4CAQ8WAh4JaW5uZXJodG1sBS1XaXJ0dWFsbmEgVWN6ZWxuaWE8IS0tIHN0YXR1czogNzcyMjA2MTI1IC0tPiBkAg0PDxYCHgRNb2RlCyolU3lzdGVtLldlYi5VSS5XZWJDb250cm9scy5UZXh0Qm94TW9kZQJkZAIVDw8WAh4EVGV4dAUZT2R6eXNraXdhbmllIGhhc8WCYTxiciAvPmRkAhcPDxYCHgdWaXNpYmxlaGQWAgIDDxBkDxYCZgIBFgIFB3N0dWRlbnQFCGR5ZGFrdHlrFgFmZAIZD2QWBAIBDw8WAh8FBTQ8YnIgLz5MdWIgemFsb2d1aiBzacSZIGpha28gc3R1ZGVudCBwcnpleiBPZmZpY2UzNjU6ZGQCAw8PFgIfBQUIUHJ6ZWpkxbpkZAIbDw8WBB8FBRhTZXJ3aXMgQWJzb2x3ZW50w7N3PGJyLz4fBmhkZAIfDw8WAh8GaGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBUpjdGwwMCRjdGwwMCRUb3BNZW51UGxhY2VIb2xkZXIkVG9wTWVudUNvbnRlbnRQbGFjZUhvbGRlciRNZW51VG9wMyRtZW51VG9wM71u5cvxo3%2F6OarM3JXDhn%2F9bImN&__VIEWSTATEGENERATOR=7D6A02AE";
-            NetworkTask task = new NetworkTask();
-            task.execute(page_url + "Logowanie2.aspx?returnUrl=/WU/OcenyP.aspx", bodyParams);
+            PostLoginTask postLoginTask = new PostLoginTask();
+            postLoginTask.execute(page_url + "Logowanie2.aspx?returnUrl=/WU/OcenyP.aspx", bodyParams);
 
 
         });

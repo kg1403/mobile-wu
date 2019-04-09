@@ -59,22 +59,18 @@ public class OcenyActivity extends AppCompatActivity {
             .cookieJar(cookieHelper.cookieJar())
             .build();
 
-    class NetworkTask extends AsyncTask<String, Integer, String> {
+    class GetOcenyTask extends AsyncTask<Void, Integer, String> {
 
         final ProgressBar simpleProgressBar = findViewById(R.id.progressBarOceny);
 
         @Override
-        protected String doInBackground(String... strings) {
-            MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-            RequestBody body = RequestBody.create(mediaType, strings[1]);
+        protected String doInBackground(Void... voids) {
             Request request = new Request.Builder()
-                    .url(strings[0])
-                    .post(body)
-                    .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("cache-control", "no-cache")
+                    .url(page_url + "OcenyP.aspx")
+                    .get()
                     .build();
 
-            try (Response response = client.newCall(request).execute()) {
+            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {
                 Log.e("tag", response.message().toString());
                 try {
                     return response.body().string();
@@ -91,19 +87,6 @@ public class OcenyActivity extends AppCompatActivity {
         protected void onPostExecute(String body) {
             Document doc = Jsoup.parse(body); //
             String document = doc.toString();
-            //textView.setText("Response is: "+ body.substring(0,500));
-            try {
-                Element blad = doc.getElementById("ctl00_ctl00_ContentPlaceHolder_MiddleContentPlaceHolder_lblMessage");
-                if (blad != null) {
-                    Toast.makeText(OcenyActivity.this, blad.text(), Toast.LENGTH_SHORT)
-                            .show();
-//                    Log.e("tag", blad.text());
-                    return;
-                }
-            } catch (Exception e) {
-                Log.e("tag", "jest blad");
-                e.printStackTrace();
-            }
             Element e = doc.getElementById("ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_tab");
             if (e != null) {
                 for (Element td : e.getElementsByTag("td")) {
@@ -190,11 +173,8 @@ public class OcenyActivity extends AppCompatActivity {
         adapter=new ArrayAdapter<String>(this,R.layout.activity_list_view_oceny, R.id.textViewOceny, listValue);
         gridView.setAdapter(adapter);
 
-        String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + "login" + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + "haslo"
-                + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj"
-                + "&__VIEWSTATE=%2FwEPDwUKMTgxMTA3NTE0Mw8WAh4DaGFzZRYCZg9kFgJmD2QWAgIBD2QWBAICD2QWAgIBD2QWAgIBD2QWAgICDxQrAAIUKwACDxYEHgtfIURhdGFCb3VuZGceF0VuYWJsZUFqYXhTa2luUmVuZGVyaW5naGRkZGQCBA9kFgICAw9kFg4CAQ8WAh4JaW5uZXJodG1sBS1XaXJ0dWFsbmEgVWN6ZWxuaWE8IS0tIHN0YXR1czogNzcyMjA2MTI1IC0tPiBkAg0PDxYCHgRNb2RlCyolU3lzdGVtLldlYi5VSS5XZWJDb250cm9scy5UZXh0Qm94TW9kZQJkZAIVDw8WAh4EVGV4dAUZT2R6eXNraXdhbmllIGhhc8WCYTxiciAvPmRkAhcPDxYCHgdWaXNpYmxlaGQWAgIDDxBkDxYCZgIBFgIFB3N0dWRlbnQFCGR5ZGFrdHlrFgFmZAIZD2QWBAIBDw8WAh8FBTQ8YnIgLz5MdWIgemFsb2d1aiBzacSZIGpha28gc3R1ZGVudCBwcnpleiBPZmZpY2UzNjU6ZGQCAw8PFgIfBQUIUHJ6ZWpkxbpkZAIbDw8WBB8FBRhTZXJ3aXMgQWJzb2x3ZW50w7N3PGJyLz4fBmhkZAIfDw8WAh8GaGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBUpjdGwwMCRjdGwwMCRUb3BNZW51UGxhY2VIb2xkZXIkVG9wTWVudUNvbnRlbnRQbGFjZUhvbGRlciRNZW51VG9wMyRtZW51VG9wM71u5cvxo3%2F6OarM3JXDhn%2F9bImN&__VIEWSTATEGENERATOR=7D6A02AE";
-        NetworkTask task = new NetworkTask();
-        task.execute(page_url + "Logowanie2.aspx?returnUrl=/WU/OcenyP.aspx", bodyParams);
+       GetOcenyTask ocenyTask = new GetOcenyTask();
+       ocenyTask.execute();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

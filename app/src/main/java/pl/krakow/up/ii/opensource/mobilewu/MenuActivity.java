@@ -79,7 +79,8 @@ public class MenuActivity extends AppCompatActivity {
 
             case R.id.subitem1:
                 Toast.makeText(this, "Wylogowano", Toast.LENGTH_SHORT).show();
-
+                AppConfiguration.cookieJar = null;
+                AppConfiguration.okHttpClient = null;
                 Intent intent = new Intent(MenuActivity.this, MainActivity.class);
                 finish();
                 startActivity(intent);

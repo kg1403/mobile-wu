@@ -15,6 +15,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".OcenySecondActivity"></activity>
         <activity android:name=".OcenyActivity" />
+        <activity android:name=".PlanStudiowActivity" />
+        <activity android:name=".PlanStudiowSecondActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

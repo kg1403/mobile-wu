@@ -59,8 +59,8 @@ public class MenuActivity extends AppCompatActivity {
                     case 1:
                         Toast.makeText(getApplicationContext(), "Wybrano Plan studiów", Toast.LENGTH_SHORT).show();
                         System.out.println("Wybrano 1");
-                        //Intent intent = new Intent(MenuActivity.this, [tu wpisujesz swoje activity.class]);
-                        //startActivity(intent);
+                        Intent intent2 = new Intent(MenuActivity.this,PlanStudiowActivity.class);
+                        startActivity(intent2);
                         break;
                     case 2:
                         Toast.makeText(getApplicationContext(), "Wybrano zajęć", Toast.LENGTH_SHORT).show();

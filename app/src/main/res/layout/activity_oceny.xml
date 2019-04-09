@@ -11,10 +11,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:columnWidth="90dp"
+        android:gravity="center"
         android:numColumns="2"
         android:padding="1dp"
-        android:gravity="center"
-        android:stretchMode="columnWidth"/>
+        android:stretchMode="columnWidth" />
 
     <TextView
         android:id="@+id/tvOceny"
@@ -30,12 +30,12 @@
     <ProgressBar
         android:id="@+id/progressBarOceny"
         style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="150pt"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="20dp"
         android:visibility="visible" />
 
 

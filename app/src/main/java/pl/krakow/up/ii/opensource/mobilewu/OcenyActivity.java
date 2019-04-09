@@ -33,12 +33,16 @@ import okhttp3.Response;
 public class OcenyActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+    String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+
+    ArrayAdapter<String> adapter = null;
+
 
     TextView textView = null;
     List<String> list = new ArrayList<>();
     ListView listView;
     GridView gridView;
-    String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+
     String[] listValueWystawil = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
     String[] listValueGodziny= new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
     String[] listValueTerminI = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
@@ -125,33 +129,6 @@ public class OcenyActivity extends AppCompatActivity {
                 }
             }
 
-            /* //Wybiera nazwy kolumn
-            if (result != null){
-                result.trim();
-                String[] tabBadString = new String[]{"<tr","tbody","\n","/tr","/td","td","table"};
-                StringTokenizer stringTokenizer = new StringTokenizer(result);
-                int p=0;
-                while (stringTokenizer.hasMoreTokens()) {
-                    String t=stringTokenizer.nextToken("><");
-                    for (String s: tabBadString){
-                        if (!t.contains(s)){ p+=1; }
-                    }
-                    if (p==tabBadString.length){ list.add(t);}
-                    p=0;
-                }
-                System.out.println("\n\n\n");
-                simpleProgressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
-                for (int j=0;j<list.size();j++){System.out.println(list.get(j));}
-                for (int j=0;j<8;j++){listValue[j]=list.get(j+1);}
-                //wybranie poszczegolnych elementow listy
-                for (String s:listValue){System.out.println(s);}
-                //textView.setText(list.get(1));
-                textView.invalidate();
-                listView.invalidate();
-
-            }
-            */
             // wybiera nazwy przedmiotow
             if (result != null){
 
@@ -191,16 +168,13 @@ public class OcenyActivity extends AppCompatActivity {
                 for (String s:listValuePoprawkowy){System.out.println(s);}
                 for (String s:listValueKomisyjny){System.out.println(s);}
                 for (String s:listValue){System.out.println(s);}
-
+                adapter.notifyDataSetInvalidated();
+                //adapter.notifyDataSetChanged();
                 simpleProgressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
                 //textView.setText(list.get(1));
 
-
             }
-
-
-
         }
     }
 
@@ -213,7 +187,7 @@ public class OcenyActivity extends AppCompatActivity {
         textView = findViewById(R.id.tvOceny);
         gridView = findViewById(R.id.gvOceny);
         //listView = findViewById(R.id.lvMenuOceny);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_list_view_oceny, R.id.textViewOceny, listValue);
+        adapter=new ArrayAdapter<String>(this,R.layout.activity_list_view_oceny, R.id.textViewOceny, listValue);
         gridView.setAdapter(adapter);
 
         String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + "login" + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + "haslo"

@@ -1,8 +1,11 @@
 package pl.krakow.up.ii.opensource.mobilewu;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,11 @@ public class OcenySecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_oceny_second);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         //tabView lewej kolumny
         tvNazwa = findViewById(R.id.tvNazwa);
         tvWystawil = findViewById(R.id.tvWystawil);

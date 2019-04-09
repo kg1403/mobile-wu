@@ -14,8 +14,6 @@
         android:numColumns="2"
         android:padding="1dp"
         android:gravity="center"
-        android:verticalSpacing="50dp"
-        android:horizontalSpacing="30dp"
         android:stretchMode="columnWidth"/>
 
     <TextView

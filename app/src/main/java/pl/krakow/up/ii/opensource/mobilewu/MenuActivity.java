@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Menu");
+
         //actionBar.setIcon(R.drawable.logo_up);
         //actionBar.setDisplayShowHomeEnabled(true);
 
@@ -52,6 +53,7 @@ public class MenuActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Wybrano Oceny", Toast.LENGTH_SHORT).show();
                         System.out.println("Wybrano 0");
                         Intent intent = new Intent(MenuActivity.this,OcenyActivity.class);
+
                         startActivity(intent);
                         break;
                     case 1:
@@ -90,8 +92,6 @@ public class MenuActivity extends AppCompatActivity {
 
             case R.id.subitem1:
                 Toast.makeText(this, "Wylogowano", Toast.LENGTH_SHORT).show();
-                AppConfiguration.cookieJar = null;
-                AppConfiguration.okHttpClient = null;
                 Intent intent = new Intent(MenuActivity.this, MainActivity.class);
                 finish();
                 startActivity(intent);

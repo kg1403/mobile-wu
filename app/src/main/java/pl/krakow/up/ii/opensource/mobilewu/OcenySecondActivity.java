@@ -63,15 +63,15 @@ public class OcenySecondActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int a = intent.getIntExtra("IdNazwa",0);
-        String[] Typ = intent.getStringArrayExtra("Typ");
+        ArrayList<String> Typ = intent.getStringArrayListExtra("Typ");
         tvNazwa.setText(intent.getStringExtra("Nazwa"));
-        for (int i=0;i<Typ.length;i++){
-            if (i==2){tvWystawil.setText(Typ[i]);}
-            if (i==3){tvLiczbaGodzin.setText(Typ[i]);}
-            if (i==4){tvTermin.setText(Typ[i]);}
-            if (i==5){tvPoprawkowy.setText(Typ[i]);}
-            if (i==6){tvKomisyjny.setText(Typ[i]);}
-            if (i==7){tvEtcs.setText(Typ[i]);}
+        for (int i=0;i<Typ.size();i++){
+            if (i==2){tvWystawil.setText(Typ.get(i));}
+            if (i==3){tvLiczbaGodzin.setText(Typ.get(i));}
+            if (i==4){tvTermin.setText(Typ.get(i));}
+            if (i==5){tvPoprawkowy.setText(Typ.get(i));}
+            if (i==6){tvKomisyjny.setText(Typ.get(i));}
+            if (i==7){tvEtcs.setText(Typ.get(i));}
         }
         tvWystawilEdit.setText(intent.getStringExtra("Wystawil"));
         tvLiczbaGodzinEdit.setText(intent.getStringExtra("Godziny"));

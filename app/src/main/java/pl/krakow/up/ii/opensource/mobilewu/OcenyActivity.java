@@ -36,23 +36,24 @@ import okhttp3.Response;
 public class OcenyActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-    String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    //String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+    ArrayList<String> listValue = new ArrayList<>();
 
     ArrayAdapter<String> adapter = null;
 
 
     TextView textView = null;
     List<String> list = new ArrayList<>();
-    ListView listView;
     GridView gridView;
+    ListView listView;
 
-    String[] listValueWystawil = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueGodziny= new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueTerminI = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValuePoprawkowy = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueKomisyjny = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueEtcs = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueTyp = new String[]{"1","2","3","4","5","6","7","8"};
+    ArrayList<String> listValueWystawil = new ArrayList<>();
+    ArrayList<String> listValueGodziny= new ArrayList<>();
+    ArrayList<String> listValueTerminI = new ArrayList<>();
+    ArrayList<String> listValuePoprawkowy = new ArrayList<>();
+    ArrayList<String> listValueKomisyjny = new ArrayList<>();
+    ArrayList<String> listValueEtcs = new ArrayList<>();
+    ArrayList<String> listValueTyp = new ArrayList<>();
     final String page_url = "https://wu.up.krakow.pl/WU/";
 
 
@@ -132,31 +133,32 @@ public class OcenyActivity extends AppCompatActivity {
                 }
                 System.out.println("\n\n\n");
                 //for (int j=0;j<list.size();j++){System.out.println(list.get(j));}
-                //wybranie poszczegolnych elementow listy
-                for (int j=0;j<list.size();j++){
-                    if (j>0 && j+7<=list.size() && list.get(j-1).equals("tr class=\"gridDane\"")){
-                        System.out.println(list.get(j));
-                        listValue[p2]=list.get(j) + "\n" + list.get(j+1);
-                        listValueWystawil[p2]=list.get(j+2);
-                        listValueGodziny[p2]=list.get(j+3);
-                        listValueTerminI[p2]=list.get(j+4);
-                        listValuePoprawkowy[p2]=list.get(j+5);
-                        listValueKomisyjny[p2]=list.get(j+6);
-                        listValueEtcs[p2]=list.get(j+7);
-                        p2+=1;
+
+                //wybranie poszczegolnych elementow listy i przypisanie do list
+                if (listValue.size()==0) {
+                    for (int j = 0; j < list.size(); j++) {
+                        if (j > 0 && j + 7 <= list.size() && list.get(j - 1).equals("tr class=\"gridDane\"")) {
+                            System.out.println(list.get(j));
+                            listValue.add(list.get(j) + "\n" + list.get(j + 1));
+                            System.out.println(listValue.get(p2));
+                            listValueWystawil.add(list.get(j + 2));
+                            listValueGodziny.add(list.get(j + 3));
+                            listValueTerminI.add(list.get(j + 4));
+                            listValuePoprawkowy.add(list.get(j + 5));
+                            listValueKomisyjny.add(list.get(j + 6));
+                            listValueEtcs.add(list.get(j + 7));
+
+                        }
                     }
                 }
-                for (int j=0;j<8;j++){listValueTyp[j]=list.get(j+1);}
-                //wybranie poszczegolnych elementow listy
-                for (String s:listValueWystawil){System.out.println(s);}
-                for (String s:listValueGodziny){System.out.println(s);}
-                for (String s:listValueTerminI){System.out.println(s);}
-                for (String s:listValuePoprawkowy){System.out.println(s);}
-                for (String s:listValueKomisyjny){System.out.println(s);}
-                for (String s:listValue){System.out.println(s);}
+                //przypisanie nazw szegółów przedmiotu
+                for (int j=0;j<8;j++){listValueTyp.add(list.get(j+1));}
+
                 adapter.notifyDataSetInvalidated();
                 //adapter.notifyDataSetChanged();
                 simpleProgressBar.setVisibility(View.INVISIBLE);
+                listView.setVisibility(View.VISIBLE);
+
                 Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
                 //textView.setText(list.get(1));
 
@@ -173,29 +175,32 @@ public class OcenyActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_oceny);
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Przedmioty");
         actionBar.hide();
 
+
         textView = findViewById(R.id.tvOceny);
-        gridView = findViewById(R.id.gvOceny);
-        //listView = findViewById(R.id.lvMenuOceny);
+        listView = findViewById(R.id.lvOceny);
+        listView.setVisibility(View.VISIBLE);
+        if (listValue.size()==0) listView.setVisibility(View.INVISIBLE);
         adapter=new ArrayAdapter<String>(this,R.layout.activity_list_view_oceny, R.id.textViewOceny, listValue);
-        gridView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
        GetOcenyTask ocenyTask = new GetOcenyTask();
        ocenyTask.execute();
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(OcenyActivity.this, OcenySecondActivity.class);
                 intent.putExtra("IdNazwa",position);
-                intent.putExtra("Nazwa",listValue[position]);
-                intent.putExtra("Wystawil",listValueWystawil[position]);
-                intent.putExtra("Godziny",listValueGodziny[position]);
-                intent.putExtra("TerminI",listValueTerminI[position]);
-                intent.putExtra("Poprawkowy",listValuePoprawkowy[position]);
-                intent.putExtra("Komisyjny",listValueKomisyjny[position]);
-                intent.putExtra("ETCS",listValueEtcs[position]);
+                intent.putExtra("Nazwa",listValue.get(position));
+                intent.putExtra("Wystawil",listValueWystawil.get(position));
+                intent.putExtra("Godziny",listValueGodziny.get(position));
+                intent.putExtra("TerminI",listValueTerminI.get(position));
+                intent.putExtra("Poprawkowy",listValuePoprawkowy.get(position));
+                intent.putExtra("Komisyjny",listValueKomisyjny.get(position));
+                intent.putExtra("ETCS",listValueEtcs.get(position));
                 intent.putExtra("Typ",listValueTyp);
                 startActivity(intent);
             }

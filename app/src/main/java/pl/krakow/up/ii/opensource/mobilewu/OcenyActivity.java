@@ -36,7 +36,6 @@ import okhttp3.Response;
 public class OcenyActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-    //String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
     ArrayList<String> listValue = new ArrayList<>();
 
     ArrayAdapter<String> adapter = null;

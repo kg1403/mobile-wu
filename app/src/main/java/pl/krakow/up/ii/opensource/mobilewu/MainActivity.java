@@ -1,6 +1,10 @@
 package pl.krakow.up.ii.opensource.mobilewu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +34,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+    ProgressBar simpleProgressBar = null;
 
     EditText login = null;
     EditText pass = null;
@@ -37,56 +42,83 @@ public class MainActivity extends AppCompatActivity {
 
     final String page_url = "https://wu.up.krakow.pl/WU/";
 
+    private boolean checkConnectivity() {
+        boolean enabled = true;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+
+        if ((info == null || !info.isConnected() || !info.isAvailable())) {
+            return false;
+        }
+        return true;
+    }
+
     //klasa służąca do wysyłania zapytań do strony z wykorzystaniem cookies
     class PostLoginTask extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... strings) {
+            if (!checkConnectivity()){
+                Toast.makeText(MainActivity.this, "Błąd połączenia z siecią...", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                RequestBody body = RequestBody.create(mediaType, strings[1]);
+                Request request = new Request.Builder()
+                        .url(strings[0])
+                        .post(body)
+                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                        .addHeader("cache-control", "no-cache")
+                        .build();
 
+                try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {
+                    Log.e("tag", response.message().toString());
+                    try {
+                        //System.out.println("\n To jest print: "+response.body().string()+"    : no i tak\n");
+                        return response.body().string();
 
-            MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-            RequestBody body = RequestBody.create(mediaType, strings[1]);
-            Request request = new Request.Builder()
-                    .url(strings[0])
-                    .post(body)
-                    .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("cache-control", "no-cache")
-                    .build();
-
-            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {
-                Log.e("tag", response.message().toString());
-                try {
-                    //System.out.println("\n To jest print: "+response.body().string()+"    : no i tak\n");
-                    return response.body().string();
-
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(MainActivity.this,"Błąd sesji",Toast.LENGTH_SHORT).show();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(MainActivity.this,"Błąd sesji",Toast.LENGTH_SHORT).show();
             }
+
             return null;
         }
 
         @Override
         protected void onPostExecute(String body) {
-            Document doc = Jsoup.parse(body); //
-
-            try {
-                Element blad = doc.getElementById("ctl00_ctl001_ContentPlaceHolder_MiddleContentPlaceHolder_lblMessage");
-                if (blad != null) {
-                    Toast.makeText(MainActivity.this, blad.text(), Toast.LENGTH_SHORT).show();
-                    //Log.e("tag", blad.text());
-                    return;
-                }
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                finish();
-                startActivity(intent);
-            } catch (Exception e) {
-                Log.e("tag", "jest blad");
-                e.printStackTrace();
+            if (!checkConnectivity()){
+                simpleProgressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(MainActivity.this,"Błąd połączenia z siecią...", Toast.LENGTH_SHORT).show();
             }
+            else {
+                Document doc = Jsoup.parse(body); //
+
+                try {
+                    Element blad = doc.getElementById("ctl00_ctl00_ContentPlaceHolder_MiddleContentPlaceHolder_lblMessage");
+                    if (blad != null) {
+                        Toast.makeText(MainActivity.this, blad.text(), Toast.LENGTH_SHORT).show();
+                        Log.e("tag", blad.text());
+                        simpleProgressBar.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+                    else{
+                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+
+                } catch (Exception e) {
+                    Log.e("tag", "jest blad");
+                    e.printStackTrace();
+                }
+            }
+
         }
     }
     //klasa służąca do pobierania zawartości strony z wykorzystaniem cookies
@@ -125,7 +157,12 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         pass = findViewById(R.id.password);
         loginBtn = findViewById(R.id.login_button);
-        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        simpleProgressBar = findViewById(R.id.progressBar);
+
+        if (!checkConnectivity()){
+            Toast.makeText(getApplicationContext(), "Błąd połączenia z siecią...", Toast.LENGTH_SHORT).show();
+        }
+
 
         loginBtn.setOnClickListener(v -> {
             String slogin = login.getText().toString();

@@ -1,9 +1,12 @@
 package pl.krakow.up.ii.opensource.mobilewu;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -12,48 +15,41 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.riversun.okhttp3.OkHttp3CookieHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PlanStudiowActivity extends AppCompatActivity {
 
     final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-    String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-
-    ArrayAdapter<String> adapter = null;
-
 
     TextView textView = null;
-    List<String> list = new ArrayList<>();
-    ListView listView;
     GridView gridView;
 
-    String[] listValueProwadzacy = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueFormaZajec= new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueGodziny = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueECTS = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueFormaZal = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueGrupa = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
-    String[] listValueTyp = new String[]{"1","2","3","4","5","6","7","8"};
     final String page_url = "https://wu.up.krakow.pl/WU/";
+
+    ArrayAdapter<String> gridViewArrayAdapter;
+    ArrayList colName = new ArrayList();
+    ArrayList nazwyKursow = new ArrayList();
+    ArrayList nazwyProwadzacych = new ArrayList();
+    ArrayList nazwyFormaZajec = new ArrayList();
+    ArrayList nazwyGodziny = new ArrayList();
+    ArrayList nazwyECTS = new ArrayList();
+    ArrayList nazwyFormaZaliczenia = new ArrayList();
+    ArrayList nazwyPobierzDokumenty = new ArrayList();
+    ArrayList nazwyNazwaGrupy = new ArrayList();
 
 
     final OkHttpClient client = new OkHttpClient().newBuilder()
@@ -88,81 +84,97 @@ public class PlanStudiowActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String body) {
-            Document doc = Jsoup.parse(body); //
-            String document = doc.toString();
-            Element e = doc.getElementById("ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_tab");
-            if (e != null) {
-                for (Element td : e.getElementsByTag("td")) {
-                    Log.e("--td -- ", td.text());
-                }
-            }
-            //System.out.println("BODY: "+document);
-            String szukacz1 = "<table class=\"gridPadding fill\" cellspacing=\"0\" cellpadding=\"0\" rules=\"all\" border=\"1\" id=\"ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane\">";
-            String szukacz2 = "</table>";
-            String result = null;
+            Document doc;
+            doc = Jsoup.parse(body);
 
-            for (int i = 0; i < doc.toString().length(); i++) {
-                System.out.println("\n\n\n\n\n\n\n\n");
-                if (document.contains(szukacz1) && document.contains(szukacz2)) {
-                    System.out.println("Szukane frazy wystepują na pozycji: ");
-                    System.out.println(+(document.indexOf(szukacz1) + 1) + " oraz: " + (document.indexOf(szukacz1) + 1));
-                    //System.out.println("\n" + document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz1))));
-                    result=document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz2)));
-                    break;
-                } else {
-                    System.out.println("Szukana fraza nie wystepuje");
-                    break;
-                }
+
+            int trList = 0;
+            int tdList = 0;
+
+            Element element = doc.getElementById("ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane");
+            Element tbody = element.getElementsByTag("tbody").first();
+
+            Elements tds = null;
+            Elements trs = tbody.getElementsByTag("tr");
+
+
+            for (Element tr : trs){
+                if(tr.hasClass("gridDane"))
+                    trList++;
+                tds = tr.getElementsByTag("td");
             }
 
-            // wybiera nazwy przedmiotow
-            if (result != null){
-
-                result.trim();
-                String[] tabBadString = new String[]{"<tr","tbody","\n","/tr","/td","td","table"};
-                StringTokenizer stringTokenizer = new StringTokenizer(result);
-                int p1=0,p2=0;
-                while (stringTokenizer.hasMoreTokens()) {
-                    String t=stringTokenizer.nextToken("><");
-                    for (String s: tabBadString){
-                        if (!t.contains(s)){ p1+=1; }
-                    }
-                    if (p1==tabBadString.length){ list.add(t);}
-                    p1=0;
-                }
-                System.out.println("\n\n\n");
-                //for (int j=0;j<list.size();j++){System.out.println(list.get(j));}
-                //wybranie poszczegolnych elementow listy
-                for (int j=0;j<list.size();j++){
-                    if (j>0 && j+7<=list.size() && list.get(j-1).equals("tr class=\"gridDane\"")){
-                        System.out.println(list.get(j));
-                        listValue[p2]=list.get(j) + "\n" + list.get(j+1);
-                        listValueProwadzacy[p2]=list.get(j+2);
-                        listValueFormaZajec[p2]=list.get(j+3);
-                        listValueGodziny[p2]=list.get(j+4);
-                        listValueECTS[p2]=list.get(j+5);
-                        listValueFormaZal[p2]=list.get(j+6);
-                        listValueGrupa[p2]=list.get(j+7);
-                        p2+=1;
-                    }
-                }
-                for (int j=0;j<8;j++){listValueTyp[j]=list.get(j+1);}
-                //wybranie poszczegolnych elementow listy
-                for (String s:listValueProwadzacy){System.out.println(s);}
-                for (String s:listValueFormaZajec){System.out.println(s);}
-                for (String s:listValueGodziny){System.out.println(s);}
-                for (String s:listValueECTS){System.out.println(s);}
-                for (String s:listValueFormaZal){System.out.println(s);}
-                for (String s:listValueGrupa){System.out.println(s);}
-                for (String s:listValue){System.out.println(s);}
-                adapter.notifyDataSetInvalidated();
-                //adapter.notifyDataSetChanged();
-                simpleProgressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
-                //textView.setText(list.get(1));
-
+            for(Element td : tds){
+                tdList++;
             }
+
+            Element cols = tbody.getElementsByTag("tr").get(0);
+            for(int i =0; i<tdList; i++){
+                Element colElemet = cols.getElementsByTag("td").get(i);
+                String colNazwa = colElemet.toString().substring(colElemet.toString().indexOf(">")+1, colElemet.toString().indexOf("<", 2));
+                colName.add(colNazwa);
+            }
+
+            System.out.println("colNames : " + colName);
+            for(int i = 1; i < trList; i++){
+                Element tr = tbody.getElementsByTag("tr").get(i);
+                Element td = tr.getElementsByTag("td").get(1);
+                Element name = td.getElementsByTag("span").first();
+                String nazwa = name.toString().substring(name.toString().indexOf(">")+1, name.toString().indexOf("<", 2) );
+
+                Element typ = tr.getElementsByTag("td").get(3);
+                String typName = typ.toString().substring(typ.toString().indexOf(">")+1, typ.toString().indexOf("<", 2) );;
+                nazwyFormaZajec.add(typName);
+                if(typName.contains("W"))
+                    nazwyKursow.add(nazwa + '\n' + "WYKŁAD");
+                else if (typName.contains("L"))
+                    nazwyKursow.add(nazwa + '\n' + "LABORATORIUM");
+                else if (typName.contains("E"))
+                    nazwyKursow.add(nazwa + '\n' + "EGZAMIN");
+                else if (typName.contains("S"))
+                    nazwyKursow.add(nazwa + '\n' + "SEMINARIUM");
+                else if (typName.contains("K"))
+                    nazwyKursow.add(nazwa + '\n' + "KONWERSATORIUM");
+                else if (typName.contains("P"))
+                    nazwyKursow.add(nazwa + '\n' + "PRAKTYKA");
+                else if (typName.contains("Z"))
+                    nazwyKursow.add(nazwa + '\n' + "WYKŁAD ZDALNY");
+                else if (typName.contains("A"))
+                    nazwyKursow.add(nazwa + '\n' + "WYCHOWANIE FIZYCZNE");
+
+
+                Element prowadzacy = tr.getElementsByTag("td").get(2);
+                Element a = prowadzacy.getElementsByTag("a").first();
+                String prowadzacyName = a.toString().substring(a.toString().indexOf(">")+1, a.toString().indexOf("<", 2));
+                nazwyProwadzacych.add(prowadzacyName);
+
+                Element godziny = tr.getElementsByTag("td").get(4);
+                String godzinyName = godziny.toString().substring(godziny.toString().indexOf(">")+1, godziny.toString().indexOf("<", 2));
+                nazwyGodziny.add(godzinyName);
+
+                Element ects = tr.getElementsByTag("td").get(5);
+                String ectsName = ects.toString().substring(ects.toString().indexOf(">")+1, ects.toString().indexOf("<", 2));
+                nazwyECTS.add(ectsName);
+
+                Element formaZal = tr.getElementsByTag("td").get(6);
+                String formaZalName = formaZal.toString().substring(formaZal.toString().indexOf(">")+1, formaZal.toString().indexOf("<", 2));
+                nazwyFormaZaliczenia.add(formaZalName);
+
+                Element dokumenty = tr.getElementsByTag("td").get(7);
+                Element span = dokumenty.getElementsByTag("span").get(0);
+                String dokName = span.toString().substring(span.toString().indexOf(">")+1, span.toString().indexOf("<", 2));
+                nazwyPobierzDokumenty.add(dokName);
+
+                Element grupy = tr.getElementsByTag("td").get(8);
+                String grupName = grupy.toString().substring(grupy.toString().indexOf(">")+1, grupy.toString().indexOf("<", 2));
+                nazwyNazwaGrupy.add(grupName);
+            }
+
+            gridViewArrayAdapter.notifyDataSetInvalidated();
+            simpleProgressBar.setVisibility(View.INVISIBLE);
+            Toast.makeText(getApplicationContext(), "Synchronizacja przebiegła pomyślnie", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
@@ -176,28 +188,34 @@ public class PlanStudiowActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        new GetPlanStudiowTask().execute();
+
         textView = findViewById(R.id.tvPlanStudiow);
         gridView = findViewById(R.id.gvPlanStudiow);
-        //listView = findViewById(R.id.lvMenuOceny);
-        adapter=new ArrayAdapter<String>(this,R.layout.activity_list_view_planstudiow, R.id.textViewPlanStudiow, listValue);
-        gridView.setAdapter(adapter);
+        //nazwyKursowList = new ArrayList<String>(Arrays.asList(nazwyKursow));
+        gridViewArrayAdapter = new ArrayAdapter<String>
+                (this, R.layout.activity_list_view_planstudiow, R.id.textViewPlanStudiow, nazwyKursow);
+        gridView.setAdapter(gridViewArrayAdapter);
 
-        GetPlanStudiowTask planStudiowTask = new GetPlanStudiowTask();
-        planStudiowTask.execute();
+
+
+
+
+
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(PlanStudiowActivity.this, PlanStudiowSecondActivity.class);
-                intent.putExtra("IdNazwa",position);
-                intent.putExtra("Nazwa",listValue[position]);
-                intent.putExtra("Prowadzacy",listValueProwadzacy[position]);
-                intent.putExtra("Forma zajec",listValueFormaZajec[position]);
-                intent.putExtra("Liczba godzin",listValueGodziny[position]);
-                intent.putExtra("Pkt. ECTS",listValueECTS[position]);
-                intent.putExtra("Forma zaliczenia",listValueFormaZal[position]);
-                intent.putExtra("Grupa",listValueGrupa[position]);
-                intent.putExtra("Typ",listValueTyp);
+                intent.putExtra("Nazwa",nazwyKursow.get(position).toString());
+                intent.putExtra("Prowadzacy",nazwyProwadzacych.get(position).toString());
+                intent.putExtra("FormaZajec",nazwyFormaZajec.get(position).toString());
+                intent.putExtra("LiczbaGodzin",nazwyGodziny.get(position).toString());
+                intent.putExtra("ECTS",nazwyECTS.get(position).toString());
+                intent.putExtra("FormaZaliczenia",nazwyFormaZaliczenia.get(position).toString());
+                intent.putExtra("Dokumenty",nazwyPobierzDokumenty.get(position).toString());
+                intent.putExtra("Grupa",nazwyNazwaGrupy.get(position).toString());
+                intent.putExtra("Typ",colName);
                 startActivity(intent);
             }
         });

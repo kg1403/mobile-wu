@@ -30,11 +30,12 @@ public class PlanStudiowSecondActivity extends AppCompatActivity {
     TextView tvFormaZal;
     TextView tvFormaZalEdit;
 
+    TextView tvDokumenty;
+    TextView tvDokumentyEdit;
+
     TextView tvGrupa;
     TextView tvGrupaEdit;
 
-    List<String> list = new ArrayList<>();
-    String[] listValue = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class PlanStudiowSecondActivity extends AppCompatActivity {
         tvGodziny = findViewById(R.id.tvGodziny);
         tvECTS = findViewById(R.id.tvECTS);
         tvFormaZal = findViewById(R.id.tvFormaZal);
+        tvDokumenty = findViewById(R.id.tvDokumenty);
         tvGrupa = findViewById(R.id.tvGrupa);
         //tabView prawej kolumny
         tvProwadzacyEdit = findViewById(R.id.tvProwadzacyEdit);
@@ -58,28 +60,45 @@ public class PlanStudiowSecondActivity extends AppCompatActivity {
         tvGodzinyEdit = findViewById(R.id.tvGodzinyEdit);
         tvECTSEdit = findViewById(R.id.tvECTSEdit);
         tvFormaZalEdit = findViewById(R.id.tvFormaZalEdit);
+        tvDokumentyEdit = findViewById(R.id.tvDokumentyEdit);
         tvGrupaEdit = findViewById(R.id.tvGrupaEdit);
 
 
         Intent intent = getIntent();
         int a = intent.getIntExtra("IdNazwa",0);
-        String[] Typ = intent.getStringArrayExtra("Typ");
+        ArrayList Typ = intent.getStringArrayListExtra("Typ");
         tvNazwaKursu.setText(intent.getStringExtra("Nazwa"));
-        for (int i=0;i<Typ.length;i++){
-            if (i==2){tvProwadzacy.setText(Typ[i]);}
-            if (i==3){tvFormaZajec.setText(Typ[i]);}
-            if (i==4){tvGodziny.setText(Typ[i]);}
-            if (i==5){tvECTS.setText(Typ[i]);}
-            if (i==6){tvFormaZal.setText(Typ[i]);}
-            if (i==7){tvGrupa.setText(Typ[i]);}
-        }
-        tvProwadzacyEdit.setText(intent.getStringExtra("Prowadzący"));
-        tvFormaZajecEdit.setText(intent.getStringExtra("Forma zajęć"));
-        tvGodzinyEdit.setText(intent.getStringExtra("Liczba godzin"));
-        tvECTSEdit.setText(intent.getStringExtra("Pkt. ECTS"));
-        tvFormaZalEdit.setText(intent.getStringExtra("Forma zaliczenia"));
-        tvGrupaEdit.setText(intent.getStringExtra("Nazwa grupy"));
+        for (int i=2;i<Typ.size();i++){
+            if (i==2){
+                tvProwadzacy.setText(Typ.get(i).toString()+": ");
+                tvProwadzacyEdit.setText(intent.getStringExtra("Prowadzacy"));
+            }
+            if (i==3){
+                tvFormaZajec.setText(Typ.get(i).toString()+": ");
+                tvFormaZajecEdit.setText(intent.getStringExtra("FormaZajec"));
+            }
+            if (i==4){
+                tvGodziny.setText(Typ.get(i).toString()+": ");
+                tvGodzinyEdit.setText(intent.getStringExtra("LiczbaGodzin"));
+            }
+            if (i==5){
+                tvECTS.setText(Typ.get(i).toString()+": ");
+                tvECTSEdit.setText(intent.getStringExtra("ECTS"));
+            }
+            if (i==6){
+                tvFormaZal.setText(Typ.get(i).toString()+": ");
+                tvFormaZalEdit.setText(intent.getStringExtra("FormaZaliczenia"));
+            }
+            if (i==7){
+                tvDokumenty.setText(Typ.get(i).toString()+": ");
+                tvDokumentyEdit.setText(intent.getStringExtra("Dokumenty"));
+            }
+            if (i==8){
+                tvGrupa.setText(Typ.get(i).toString()+": ");
+                tvGrupaEdit.setText(intent.getStringExtra("Grupa"));
+            }
 
+        }
 
     }
 }

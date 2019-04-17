@@ -1,0 +1,437 @@
+Index: app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/PlanStudiowSecondActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pl.krakow.up.ii.opensource.mobilewu;\n\nimport android.content.Intent;\nimport android.support.v7.app.ActionBar;\nimport android.support.v7.app.AppCompatActivity;\nimport android.os.Bundle;\nimport android.view.Window;\nimport android.view.WindowManager;\nimport android.widget.TextView;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class PlanStudiowSecondActivity extends AppCompatActivity {\n\n    TextView tvNazwaKursu;\n    TextView tvNazwaKursuEdit;\n\n    TextView tvProwadzacy;\n    TextView tvProwadzacyEdit;\n\n    TextView tvFormaZajec;\n    TextView tvFormaZajecEdit;\n\n    TextView tvGodziny;\n    TextView tvGodzinyEdit;\n\n    TextView tvECTS;\n    TextView tvECTSEdit;\n\n    TextView tvFormaZal;\n    TextView tvFormaZalEdit;\n\n    TextView tvGrupa;\n    TextView tvGrupaEdit;\n\n    List<String> list = new ArrayList<>();\n    String[] listValue = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        requestWindowFeature(Window.FEATURE_NO_TITLE);\n        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);\n        setContentView(R.layout.activity_planstudiow_second);\n        ActionBar actionBar = getSupportActionBar();\n        actionBar.hide();\n        //tabView lewej kolumny\n        tvNazwaKursu = findViewById(R.id.tvNazwaKursu);\n        tvProwadzacy = findViewById(R.id.tvProwadzacy);\n        tvFormaZajec = findViewById(R.id.tvFormaZajec);\n        tvGodziny = findViewById(R.id.tvGodziny);\n        tvECTS = findViewById(R.id.tvECTS);\n        tvFormaZal = findViewById(R.id.tvFormaZal);\n        tvGrupa = findViewById(R.id.tvGrupa);\n        //tabView prawej kolumny\n        tvProwadzacyEdit = findViewById(R.id.tvProwadzacyEdit);\n        tvFormaZajecEdit = findViewById(R.id.tvFormaZajecEdit);\n        tvGodzinyEdit = findViewById(R.id.tvGodzinyEdit);\n        tvECTSEdit = findViewById(R.id.tvECTSEdit);\n        tvFormaZalEdit = findViewById(R.id.tvFormaZalEdit);\n        tvGrupaEdit = findViewById(R.id.tvGrupaEdit);\n\n\n        Intent intent = getIntent();\n        int a = intent.getIntExtra(\"IdNazwa\",0);\n        String[] Typ = intent.getStringArrayExtra(\"Typ\");\n        tvNazwaKursu.setText(intent.getStringExtra(\"Nazwa\"));\n        for (int i=0;i<Typ.length;i++){\n            if (i==2){tvProwadzacy.setText(Typ[i]);}\n            if (i==3){tvFormaZajec.setText(Typ[i]);}\n            if (i==4){tvGodziny.setText(Typ[i]);}\n            if (i==5){tvECTS.setText(Typ[i]);}\n            if (i==6){tvFormaZal.setText(Typ[i]);}\n            if (i==7){tvGrupa.setText(Typ[i]);}\n        }\n        tvProwadzacyEdit.setText(intent.getStringExtra(\"Prowadzący\"));\n        tvFormaZajecEdit.setText(intent.getStringExtra(\"Forma zajęć\"));\n        tvGodzinyEdit.setText(intent.getStringExtra(\"Liczba godzin\"));\n        tvECTSEdit.setText(intent.getStringExtra(\"Pkt. ECTS\"));\n        tvFormaZalEdit.setText(intent.getStringExtra(\"Forma zaliczenia\"));\n        tvGrupaEdit.setText(intent.getStringExtra(\"Nazwa grupy\"));\n\n\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/PlanStudiowSecondActivity.java	(date 1554831562000)
++++ app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/PlanStudiowSecondActivity.java	(date 1554927675399)
+@@ -30,6 +30,9 @@
+     TextView tvFormaZal;
+     TextView tvFormaZalEdit;
+ 
++    TextView tvDokumenty;
++    TextView tvDokumentyEdit;
++
+     TextView tvGrupa;
+     TextView tvGrupaEdit;
+ 
+@@ -51,6 +54,7 @@
+         tvGodziny = findViewById(R.id.tvGodziny);
+         tvECTS = findViewById(R.id.tvECTS);
+         tvFormaZal = findViewById(R.id.tvFormaZal);
++        tvDokumenty = findViewById(R.id.tvDokumenty);
+         tvGrupa = findViewById(R.id.tvGrupa);
+         //tabView prawej kolumny
+         tvProwadzacyEdit = findViewById(R.id.tvProwadzacyEdit);
+@@ -58,6 +62,7 @@
+         tvGodzinyEdit = findViewById(R.id.tvGodzinyEdit);
+         tvECTSEdit = findViewById(R.id.tvECTSEdit);
+         tvFormaZalEdit = findViewById(R.id.tvFormaZalEdit);
++        tvDokumentyEdit = findViewById(R.id.tvDokumentyEdit);
+         tvGrupaEdit = findViewById(R.id.tvGrupaEdit);
+ 
+ 
+@@ -71,13 +76,16 @@
+             if (i==4){tvGodziny.setText(Typ[i]);}
+             if (i==5){tvECTS.setText(Typ[i]);}
+             if (i==6){tvFormaZal.setText(Typ[i]);}
+-            if (i==7){tvGrupa.setText(Typ[i]);}
++            if (i==7){tvDokumenty.setText(Typ[i]);}
++            if (i==8){tvGrupa.setText(Typ[i]);}
+         }
++
+         tvProwadzacyEdit.setText(intent.getStringExtra("Prowadzący"));
+         tvFormaZajecEdit.setText(intent.getStringExtra("Forma zajęć"));
+         tvGodzinyEdit.setText(intent.getStringExtra("Liczba godzin"));
+         tvECTSEdit.setText(intent.getStringExtra("Pkt. ECTS"));
+         tvFormaZalEdit.setText(intent.getStringExtra("Forma zaliczenia"));
++        tvDokumentyEdit.setText(intent.getStringExtra("Dokumenty"));
+         tvGrupaEdit.setText(intent.getStringExtra("Nazwa grupy"));
+ 
+ 
+Index: app/src/main/res/layout/activity_planstudiow_second.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<android.support.constraint.ConstraintLayout\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\">\n\n    <TextView\n        android:id=\"@+id/tvNazwaKursu\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"8dp\"\n        android:layout_marginTop=\"8dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"center\"\n        android:textSize=\"30sp\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.09\" />\n\n    <TextView\n        android:id=\"@+id/tvProwadzacy\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"40dp\"\n        android:layout_marginTop=\"180dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"textEnd\"\n        android:textSize=\"18sp\"\n        android:textStyle=\"bold\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.078\" />\n\n    <TextView\n        android:id=\"@+id/tvFormaZajec\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"40dp\"\n        android:layout_marginTop=\"180dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"textEnd\"\n        android:textSize=\"18sp\"\n        android:textStyle=\"bold\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.15\" />\n\n    <TextView\n        android:id=\"@+id/tvGodziny\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"40dp\"\n        android:layout_marginTop=\"180dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"textEnd\"\n        android:textSize=\"18sp\"\n        android:textStyle=\"bold\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.213\" />\n\n    <TextView\n        android:id=\"@+id/tvECTS\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"40dp\"\n        android:layout_marginTop=\"180dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"textEnd\"\n        android:textSize=\"18sp\"\n        android:textStyle=\"bold\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.273\" />\n\n    <TextView\n        android:id=\"@+id/tvFormaZal\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"40dp\"\n        android:layout_marginTop=\"180dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"textEnd\"\n        android:textSize=\"18sp\"\n        android:textStyle=\"bold\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.333\" />\n\n    <TextView\n        android:id=\"@+id/tvGrupa\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"40dp\"\n        android:layout_marginTop=\"180dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"TextView\"\n        android:textAlignment=\"textEnd\"\n        android:textSize=\"18sp\"\n        android:textStyle=\"bold\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.393\" />\n\n    <TextView\n        android:id=\"@+id/tvProwadzacyEdit\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"TextView\"\n        tools:layout_editor_absoluteX=\"135dp\"\n        tools:layout_editor_absoluteY=\"221dp\" />\n\n    <TextView\n        android:id=\"@+id/tvFormaZajecEdit\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"TextView\"\n        tools:layout_editor_absoluteX=\"135dp\"\n        tools:layout_editor_absoluteY=\"263dp\" />\n\n    <TextView\n        android:id=\"@+id/tvGodzinyEdit\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"19dp\"\n        android:text=\"TextView\"\n        tools:layout_editor_absoluteX=\"135dp\"\n        tools:layout_editor_absoluteY=\"296dp\" />\n\n    <TextView\n        android:id=\"@+id/tvECTSEdit\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"TextView\"\n        tools:layout_editor_absoluteX=\"135dp\"\n        tools:layout_editor_absoluteY=\"327dp\" />\n\n    <TextView\n        android:id=\"@+id/tvFormaZalEdit\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"TextView\"\n        tools:layout_editor_absoluteX=\"135dp\"\n        tools:layout_editor_absoluteY=\"358dp\" />\n\n    <TextView\n        android:id=\"@+id/tvGrupaEdit\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"TextView\"\n        tools:layout_editor_absoluteX=\"135dp\"\n        tools:layout_editor_absoluteY=\"389dp\" />\n</android.support.constraint.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_planstudiow_second.xml	(date 1554831562000)
++++ app/src/main/res/layout/activity_planstudiow_second.xml	(date 1554926503159)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<android.support.constraint.ConstraintLayout
+-    xmlns:android="http://schemas.android.com/apk/res/android"
++<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+@@ -40,7 +39,7 @@
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.078" />
++        app:layout_constraintVertical_bias="0.132" />
+ 
+     <TextView
+         android:id="@+id/tvFormaZajec"
+@@ -59,7 +58,7 @@
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.15" />
++        app:layout_constraintVertical_bias="0.212" />
+ 
+     <TextView
+         android:id="@+id/tvGodziny"
+@@ -78,7 +77,7 @@
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.213" />
++        app:layout_constraintVertical_bias="0.296" />
+ 
+     <TextView
+         android:id="@+id/tvECTS"
+@@ -97,7 +96,7 @@
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.273" />
++        app:layout_constraintVertical_bias="0.375" />
+ 
+     <TextView
+         android:id="@+id/tvFormaZal"
+@@ -116,7 +115,26 @@
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.333" />
++        app:layout_constraintVertical_bias="0.452" />
++
++    <TextView
++        android:id="@+id/tvDokumenty"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="40dp"
++        android:layout_marginTop="180dp"
++        android:layout_marginEnd="8dp"
++        android:layout_marginBottom="8dp"
++        android:text="TextView"
++        android:textAlignment="textEnd"
++        android:textSize="18sp"
++        android:textStyle="bold"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintVertical_bias="0.534" />
+ 
+     <TextView
+         android:id="@+id/tvGrupa"
+@@ -135,53 +153,70 @@
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+-        app:layout_constraintVertical_bias="0.393" />
++        app:layout_constraintVertical_bias="0.618" />
+ 
+     <TextView
+         android:id="@+id/tvProwadzacyEdit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_marginStart="8dp"
+         android:text="TextView"
+-        tools:layout_editor_absoluteX="135dp"
+-        tools:layout_editor_absoluteY="221dp" />
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvProwadzacy"
++        app:layout_constraintStart_toEndOf="@+id/tvProwadzacy" />
+ 
+     <TextView
+         android:id="@+id/tvFormaZajecEdit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_marginStart="8dp"
+         android:text="TextView"
+-        tools:layout_editor_absoluteX="135dp"
+-        tools:layout_editor_absoluteY="263dp" />
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvFormaZajec"
++        app:layout_constraintStart_toEndOf="@+id/tvFormaZajec" />
+ 
+     <TextView
+         android:id="@+id/tvGodzinyEdit"
+         android:layout_width="wrap_content"
+         android:layout_height="19dp"
++        android:layout_marginStart="8dp"
+         android:text="TextView"
+-        tools:layout_editor_absoluteX="135dp"
+-        tools:layout_editor_absoluteY="296dp" />
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvGodziny"
++        app:layout_constraintStart_toEndOf="@+id/tvGodziny" />
+ 
+     <TextView
+         android:id="@+id/tvECTSEdit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_marginStart="8dp"
+         android:text="TextView"
+-        tools:layout_editor_absoluteX="135dp"
+-        tools:layout_editor_absoluteY="327dp" />
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvECTS"
++        app:layout_constraintStart_toEndOf="@+id/tvECTS" />
+ 
+     <TextView
+         android:id="@+id/tvFormaZalEdit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_marginStart="8dp"
+         android:text="TextView"
+-        tools:layout_editor_absoluteX="135dp"
+-        tools:layout_editor_absoluteY="358dp" />
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvFormaZal"
++        app:layout_constraintStart_toEndOf="@+id/tvFormaZal" />
++
++    <TextView
++        android:id="@+id/tvDokumentyEdit"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="8dp"
++        android:layout_marginEnd="216dp"
++        android:text="TextView"
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvDokumenty"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toEndOf="@+id/tvDokumenty" />
+ 
+     <TextView
+         android:id="@+id/tvGrupaEdit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_marginStart="135dp"
+         android:text="TextView"
+-        tools:layout_editor_absoluteX="135dp"
+-        tools:layout_editor_absoluteY="389dp" />
++        app:layout_constraintBaseline_toBaselineOf="@+id/tvGrupa"
++        app:layout_constraintStart_toStartOf="parent" />
+ </android.support.constraint.ConstraintLayout>
+\ No newline at end of file
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\n\nbuildscript {\n    repositories {\n        google()\n        jcenter()\n        \n    }\n    dependencies {\n        classpath 'com.android.tools.build:gradle:3.3.0'\n        \n        // NOTE: Do not place your application dependencies here; they belong\n        // in the individual module build.gradle files\n    }\n}\n\nallprojects {\n    repositories {\n        google()\n        jcenter()\n        \n    }\n}\n\ntask clean(type: Delete) {\n    delete rootProject.buildDir\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(date 1554831562000)
++++ build.gradle	(date 1554919057703)
+@@ -7,7 +7,7 @@
+         
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:3.3.0'
++        classpath 'com.android.tools.build:gradle:3.3.2'
+         
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+Index: app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pl.krakow.up.ii.opensource.mobilewu;\n\nimport android.content.Intent;\nimport android.os.AsyncTask;\nimport android.support.v7.app.ActionBar;\nimport android.support.v7.app.AppCompatActivity;\nimport android.os.Bundle;\nimport android.util.Log;\nimport android.view.View;\nimport android.view.Window;\nimport android.view.WindowManager;\nimport android.widget.Button;\nimport android.widget.EditText;\nimport android.widget.ProgressBar;\nimport android.widget.Toast;\n\nimport org.jsoup.Jsoup;\nimport org.jsoup.nodes.Document;\nimport org.jsoup.nodes.Element;\nimport org.riversun.okhttp3.OkHttp3CookieHelper;\n\nimport java.io.IOException;\n\nimport okhttp3.MediaType;\nimport okhttp3.OkHttpClient;\nimport okhttp3.Request;\nimport okhttp3.RequestBody;\nimport okhttp3.Response;\n\npublic class MainActivity extends AppCompatActivity {\n\n    final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();\n\n    EditText login = null;\n    EditText pass = null;\n    Button loginBtn = null;\n\n    final String page_url = \"https://wu.up.krakow.pl/WU/\";\n\n    //klasa służąca do wysyłania zapytań do strony z wykorzystaniem cookies\n    class PostLoginTask extends AsyncTask<String, Integer, String> {\n\n        @Override\n        protected String doInBackground(String... strings) {\n\n\n            MediaType mediaType = MediaType.parse(\"application/x-www-form-urlencoded\");\n            RequestBody body = RequestBody.create(mediaType, strings[1]);\n            Request request = new Request.Builder()\n                    .url(strings[0])\n                    .post(body)\n                    .addHeader(\"Content-Type\", \"application/x-www-form-urlencoded\")\n                    .addHeader(\"cache-control\", \"no-cache\")\n                    .build();\n\n            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {\n                Log.e(\"tag\", response.message().toString());\n                try {\n                    //System.out.println(\"\\n To jest print: \"+response.body().string()+\"    : no i tak\\n\");\n                    return response.body().string();\n\n                } catch (IOException e) {\n                    e.printStackTrace();\n                }\n            } catch (IOException e) {\n                e.printStackTrace();\n                Toast.makeText(MainActivity.this,\"Błąd sesji\",Toast.LENGTH_SHORT).show();\n            }\n            return null;\n        }\n\n        @Override\n        protected void onPostExecute(String body) {\n            Document doc = Jsoup.parse(body); //\n\n            try {\n                Element blad = doc.getElementById(\"ctl00_ctl001_ContentPlaceHolder_MiddleContentPlaceHolder_lblMessage\");\n                if (blad != null) {\n                    Toast.makeText(MainActivity.this, blad.text(), Toast.LENGTH_SHORT).show();\n                    //Log.e(\"tag\", blad.text());\n                    return;\n                }\n                Intent intent = new Intent(MainActivity.this, MenuActivity.class);\n                finish();\n                startActivity(intent);\n            } catch (Exception e) {\n                Log.e(\"tag\", \"jest blad\");\n                e.printStackTrace();\n            }\n        }\n    }\n    //klasa służąca do pobierania zawartości strony z wykorzystaniem cookies\n    class GetLoginTask extends AsyncTask<Void, Integer, Void>{  //w przyszłości użyty np do pobrania błędów)\n\n        @Override\n        protected Void doInBackground(Void... voids) {\n            Request request = new Request.Builder()\n                    .url(page_url + \"Logowanie2.aspx\")\n                    .get()\n                    .build();\n            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {\n                Log.e(\"tag\", response.message());\n                try {\n                    Log.e(\"tag\", response.body().string());\n                } catch (IOException e) {\n                    e.printStackTrace();\n                }\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n            return null;\n        }\n    }\n\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        requestWindowFeature(Window.FEATURE_NO_TITLE);\n        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);\n        setContentView(R.layout.activity_main);\n        ActionBar actionBar = getSupportActionBar();\n        actionBar.hide();\n\n        login = findViewById(R.id.login);\n        pass = findViewById(R.id.password);\n        loginBtn = findViewById(R.id.login_button);\n        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBar);\n\n        loginBtn.setOnClickListener(v -> {\n            String slogin = login.getText().toString();\n            String spass = pass.getText().toString();\n            simpleProgressBar.setVisibility(View.VISIBLE);\n            String bodyParams = \"ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=\" + slogin + \"&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=\" + spass\n                    + \"&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj\"\n                    + \"&__VIEWSTATE=%2FwEPDwUKMTgxMTA3NTE0Mw8WAh4DaGFzZRYCZg9kFgJmD2QWAgIBD2QWBAICD2QWAgIBD2QWAgIBD2QWAgICDxQrAAIUKwACDxYEHgtfIURhdGFCb3VuZGceF0VuYWJsZUFqYXhTa2luUmVuZGVyaW5naGRkZGQCBA9kFgICAw9kFg4CAQ8WAh4JaW5uZXJodG1sBS1XaXJ0dWFsbmEgVWN6ZWxuaWE8IS0tIHN0YXR1czogNzcyMjA2MTI1IC0tPiBkAg0PDxYCHgRNb2RlCyolU3lzdGVtLldlYi5VSS5XZWJDb250cm9scy5UZXh0Qm94TW9kZQJkZAIVDw8WAh4EVGV4dAUZT2R6eXNraXdhbmllIGhhc8WCYTxiciAvPmRkAhcPDxYCHgdWaXNpYmxlaGQWAgIDDxBkDxYCZgIBFgIFB3N0dWRlbnQFCGR5ZGFrdHlrFgFmZAIZD2QWBAIBDw8WAh8FBTQ8YnIgLz5MdWIgemFsb2d1aiBzacSZIGpha28gc3R1ZGVudCBwcnpleiBPZmZpY2UzNjU6ZGQCAw8PFgIfBQUIUHJ6ZWpkxbpkZAIbDw8WBB8FBRhTZXJ3aXMgQWJzb2x3ZW50w7N3PGJyLz4fBmhkZAIfDw8WAh8GaGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBUpjdGwwMCRjdGwwMCRUb3BNZW51UGxhY2VIb2xkZXIkVG9wTWVudUNvbnRlbnRQbGFjZUhvbGRlciRNZW51VG9wMyRtZW51VG9wM71u5cvxo3%2F6OarM3JXDhn%2F9bImN&__VIEWSTATEGENERATOR=7D6A02AE\";\n            PostLoginTask postLoginTask = new PostLoginTask();\n            postLoginTask.execute(page_url + \"Logowanie2.aspx?returnUrl=/WU/OcenyP.aspx\", bodyParams);\n\n\n        });\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/MainActivity.java	(date 1554831562000)
++++ app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/MainActivity.java	(date 1554923408251)
+@@ -128,8 +128,10 @@
+         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+ 
+         loginBtn.setOnClickListener(v -> {
+-            String slogin = login.getText().toString();
+-            String spass = pass.getText().toString();
++//            String slogin = login.getText().toString();
++//            String spass = pass.getText().toString();
++            String slogin = "s133714";
++            String spass = "Turing1234";
+             simpleProgressBar.setVisibility(View.VISIBLE);
+             String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + slogin + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + spass
+                     + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj"
+Index: app/src/main/res/layout/activity_planstudiow.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<android.support.constraint.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\">\n\n    <RelativeLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\"\n        tools:context=\".MenuActivity\">\n\n        <GridView\n            android:id=\"@+id/gvPlanStudiow\"\n            android:layout_width=\"fill_parent\"\n            android:layout_height=\"wrap_content\"\n            android:columnWidth=\"90dp\"\n            android:gravity=\"center\"\n            android:numColumns=\"2\"\n            android:padding=\"1dp\"\n            android:stretchMode=\"columnWidth\" />\n\n        <TextView\n            android:id=\"@+id/tvPlanStudiow\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:layout_alignBottom=\"@+id/lvMenu\"\n            android:layout_alignParentEnd=\"true\"\n            android:layout_marginStart=\"8dp\"\n            android:layout_marginTop=\"8dp\"\n            android:layout_marginEnd=\"200dp\"\n            android:layout_marginBottom=\"40dp\" />\n\n        <ProgressBar\n            android:id=\"@+id/progressBarPlanStudiow\"\n            style=\"?android:attr/progressBarStyle\"\n            android:layout_width=\"30dp\"\n            android:layout_height=\"wrap_content\"\n            android:layout_alignParentStart=\"true\"\n            android:layout_alignParentTop=\"true\"\n            android:layout_marginStart=\"360dp\"\n            android:layout_marginTop=\"20dp\"\n            android:visibility=\"visible\" />\n\n\n    </RelativeLayout>\n\n</android.support.constraint.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_planstudiow.xml	(date 1554831562000)
++++ app/src/main/res/layout/activity_planstudiow.xml	(date 1554921444145)
+@@ -1,14 +1,10 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
++
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
+-
+-    <RelativeLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        tools:context=".MenuActivity">
++    android:layout_height="match_parent"
++    tools:context=".MenuActivity">
+ 
+         <GridView
+             android:id="@+id/gvPlanStudiow"
+@@ -44,5 +40,3 @@
+ 
+ 
+     </RelativeLayout>
+-
+-</android.support.constraint.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_list_view_planstudiow.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<android.support.constraint.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\">\n\n    <LinearLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\"\n        android:orientation=\"vertical\">\n\n        <TextView\n            android:id=\"@+id/textViewOceny\"\n            android:layout_width=\"fill_parent\"\n            android:layout_height=\"wrap_content\"\n            android:layout_gravity=\"center\"\n            android:layout_marginLeft=\"5pt\"\n            android:layout_marginTop=\"5pt\"\n            android:layout_marginRight=\"5pt\"\n            android:layout_marginBottom=\"5pt\"\n            android:background=\"@color/colorPrimary\"\n            android:padding=\"5pt\"\n            android:textAlignment=\"center\"\n            android:textColor=\"#000\"\n            android:textSize=\"8pt\" />\n\n\n    </LinearLayout>\n\n    <TextView\n        android:id=\"@+id/textViewPlanStudiow\"\n        android:layout_width=\"fill_parent\"\n        android:layout_height=\"wrap_content\"\n        android:layout_gravity=\"center\"\n        android:background=\"@color/colorPrimary\"\n        android:padding=\"5pt\"\n        android:textAlignment=\"center\"\n        android:textColor=\"#000\"\n        android:textSize=\"8pt\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\" />\n</android.support.constraint.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_list_view_planstudiow.xml	(date 1554831562000)
++++ app/src/main/res/layout/activity_list_view_planstudiow.xml	(date 1554925014567)
+@@ -1,43 +1,23 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
+-
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:orientation="vertical">
++    android:layout_height="match_parent"
++    android:orientation="vertical">
+ 
+-        <TextView
+-            android:id="@+id/textViewOceny"
+-            android:layout_width="fill_parent"
+-            android:layout_height="wrap_content"
+-            android:layout_gravity="center"
+-            android:layout_marginLeft="5pt"
+-            android:layout_marginTop="5pt"
+-            android:layout_marginRight="5pt"
+-            android:layout_marginBottom="5pt"
+-            android:background="@color/colorPrimary"
+-            android:padding="5pt"
+-            android:textAlignment="center"
+-            android:textColor="#000"
+-            android:textSize="8pt" />
++    <TextView
++        android:id="@+id/textViewPlanStudiow"
++        android:layout_width="fill_parent"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:layout_marginLeft="5pt"
++        android:layout_marginTop="5pt"
++        android:layout_marginRight="5pt"
++        android:layout_marginBottom="5pt"
++        android:background="@color/colorPrimary"
++        android:padding="5pt"
++        android:textAlignment="center"
++        android:textColor="#000"
++        android:textSize="8pt" />
+ 
+ 
+     </LinearLayout>
+-
+-    <TextView
+-        android:id="@+id/textViewPlanStudiow"
+-        android:layout_width="fill_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_gravity="center"
+-        android:background="@color/colorPrimary"
+-        android:padding="5pt"
+-        android:textAlignment="center"
+-        android:textColor="#000"
+-        android:textSize="8pt"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
+-</android.support.constraint.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/PlanStudiowActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pl.krakow.up.ii.opensource.mobilewu;\n\nimport android.content.Intent;\nimport android.support.v7.app.ActionBar;\nimport android.support.v7.app.AppCompatActivity;\nimport android.os.Bundle;\nimport android.view.Window;\nimport android.view.WindowManager;\nimport android.widget.AdapterView;\nimport android.widget.ArrayAdapter;\nimport android.widget.GridView;\nimport android.widget.ListView;\nimport android.widget.ProgressBar;\nimport android.widget.TextView;\nimport android.os.AsyncTask;\nimport android.util.Log;\nimport android.view.View;\nimport android.widget.Toast;\n\nimport org.jsoup.Jsoup;\nimport org.jsoup.nodes.Document;\nimport org.jsoup.nodes.Element;\nimport org.riversun.okhttp3.OkHttp3CookieHelper;\n\nimport java.io.IOException;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.StringTokenizer;\n\nimport okhttp3.MediaType;\nimport okhttp3.OkHttpClient;\nimport okhttp3.Request;\nimport okhttp3.RequestBody;\nimport okhttp3.Response;\n\npublic class PlanStudiowActivity extends AppCompatActivity {\n\n    final OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();\n    String[] listValue = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n\n    ArrayAdapter<String> adapter = null;\n\n\n    TextView textView = null;\n    List<String> list = new ArrayList<>();\n    ListView listView;\n    GridView gridView;\n\n    String[] listValueProwadzacy = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n    String[] listValueFormaZajec= new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n    String[] listValueGodziny = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n    String[] listValueECTS = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n    String[] listValueFormaZal = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n    String[] listValueGrupa = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"12\",\"13\"};\n    String[] listValueTyp = new String[]{\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\"};\n    final String page_url = \"https://wu.up.krakow.pl/WU/\";\n\n\n    final OkHttpClient client = new OkHttpClient().newBuilder()\n            //   .followRedirects(false)\n            //   .followSslRedirects(false)\n            .cookieJar(cookieHelper.cookieJar())\n            .build();\n\n    class GetPlanStudiowTask extends AsyncTask<Void, Integer, String> {\n\n        final ProgressBar simpleProgressBar = findViewById(R.id.progressBarPlanStudiow);\n\n        @Override\n        protected String doInBackground(Void... voids) {\n            Request request = new Request.Builder()\n                    .url(page_url + \"PlanStudiow.aspx\")\n                    .get()\n                    .build();\n\n            try (Response response = AppConfiguration.okHttpClient.newCall(request).execute()) {\n                Log.e(\"tag\", response.message().toString());\n                try {\n                    return response.body().string();\n                } catch (IOException e) {\n                    e.printStackTrace();\n                }\n            } catch (IOException e) {\n                e.printStackTrace();\n            }\n            return null;\n        }\n\n        @Override\n        protected void onPostExecute(String body) {\n            Document doc = Jsoup.parse(body); //\n            String document = doc.toString();\n            Element e = doc.getElementById(\"ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_tab\");\n            if (e != null) {\n                for (Element td : e.getElementsByTag(\"td\")) {\n                    Log.e(\"--td -- \", td.text());\n                }\n            }\n            //System.out.println(\"BODY: \"+document);\n            String szukacz1 = \"<table class=\\\"gridPadding fill\\\" cellspacing=\\\"0\\\" cellpadding=\\\"0\\\" rules=\\\"all\\\" border=\\\"1\\\" id=\\\"ctl00_ctl00_ContentPlaceHolder_RightContentPlaceHolder_dgDane\\\">\";\n            String szukacz2 = \"</table>\";\n            String result = null;\n\n            for (int i = 0; i < doc.toString().length(); i++) {\n                System.out.println(\"\\n\\n\\n\\n\\n\\n\\n\\n\");\n                if (document.contains(szukacz1) && document.contains(szukacz2)) {\n                    System.out.println(\"Szukane frazy wystepują na pozycji: \");\n                    System.out.println(+(document.indexOf(szukacz1) + 1) + \" oraz: \" + (document.indexOf(szukacz1) + 1));\n                    //System.out.println(\"\\n\" + document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz1))));\n                    result=document.substring((document.indexOf(szukacz1)), (document.indexOf(szukacz2)));\n                    break;\n                } else {\n                    System.out.println(\"Szukana fraza nie wystepuje\");\n                    break;\n                }\n            }\n\n            // wybiera nazwy przedmiotow\n            if (result != null){\n\n                result.trim();\n                String[] tabBadString = new String[]{\"<tr\",\"tbody\",\"\\n\",\"/tr\",\"/td\",\"td\",\"table\"};\n                StringTokenizer stringTokenizer = new StringTokenizer(result);\n                int p1=0,p2=0;\n                while (stringTokenizer.hasMoreTokens()) {\n                    String t=stringTokenizer.nextToken(\"><\");\n                    for (String s: tabBadString){\n                        if (!t.contains(s)){ p1+=1; }\n                    }\n                    if (p1==tabBadString.length){ list.add(t);}\n                    p1=0;\n                }\n                System.out.println(\"\\n\\n\\n\");\n                //for (int j=0;j<list.size();j++){System.out.println(list.get(j));}\n                //wybranie poszczegolnych elementow listy\n                for (int j=0;j<list.size();j++){\n                    if (j>0 && j+7<=list.size() && list.get(j-1).equals(\"tr class=\\\"gridDane\\\"\")){\n                        System.out.println(list.get(j));\n                        listValue[p2]=list.get(j) + \"\\n\" + list.get(j+1);\n                        listValueProwadzacy[p2]=list.get(j+2);\n                        listValueFormaZajec[p2]=list.get(j+3);\n                        listValueGodziny[p2]=list.get(j+4);\n                        listValueECTS[p2]=list.get(j+5);\n                        listValueFormaZal[p2]=list.get(j+6);\n                        listValueGrupa[p2]=list.get(j+7);\n                        p2+=1;\n                    }\n                }\n                for (int j=0;j<8;j++){listValueTyp[j]=list.get(j+1);}\n                //wybranie poszczegolnych elementow listy\n                for (String s:listValueProwadzacy){System.out.println(s);}\n                for (String s:listValueFormaZajec){System.out.println(s);}\n                for (String s:listValueGodziny){System.out.println(s);}\n                for (String s:listValueECTS){System.out.println(s);}\n                for (String s:listValueFormaZal){System.out.println(s);}\n                for (String s:listValueGrupa){System.out.println(s);}\n                for (String s:listValue){System.out.println(s);}\n                adapter.notifyDataSetInvalidated();\n                //adapter.notifyDataSetChanged();\n                simpleProgressBar.setVisibility(View.INVISIBLE);\n                Toast.makeText(getApplicationContext(), \"Synchronizacja przebiegła pomyślnie\", Toast.LENGTH_SHORT).show();\n                //textView.setText(list.get(1));\n\n            }\n        }\n    }\n\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n\n        super.onCreate(savedInstanceState);\n        requestWindowFeature(Window.FEATURE_NO_TITLE);\n        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);\n        setContentView(R.layout.activity_planstudiow);\n        ActionBar actionBar = getSupportActionBar();\n        actionBar.hide();\n\n        textView = findViewById(R.id.tvPlanStudiow);\n        gridView = findViewById(R.id.gvPlanStudiow);\n        //listView = findViewById(R.id.lvMenuOceny);\n        adapter=new ArrayAdapter<String>(this,R.layout.activity_list_view_planstudiow, R.id.textViewPlanStudiow, listValue);\n        gridView.setAdapter(adapter);\n\n        GetPlanStudiowTask planStudiowTask = new GetPlanStudiowTask();\n        planStudiowTask.execute();\n\n        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {\n            @Override\n            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\n                Intent intent = new Intent(PlanStudiowActivity.this, PlanStudiowSecondActivity.class);\n                intent.putExtra(\"IdNazwa\",position);\n                intent.putExtra(\"Nazwa\",listValue[position]);\n                intent.putExtra(\"Prowadzacy\",listValueProwadzacy[position]);\n                intent.putExtra(\"Forma zajec\",listValueFormaZajec[position]);\n                intent.putExtra(\"Liczba godzin\",listValueGodziny[position]);\n                intent.putExtra(\"Pkt. ECTS\",listValueECTS[position]);\n                intent.putExtra(\"Forma zaliczenia\",listValueFormaZal[position]);\n                intent.putExtra(\"Grupa\",listValueGrupa[position]);\n                intent.putExtra(\"Typ\",listValueTyp);\n                startActivity(intent);\n            }\n        });\n\n\n    }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/PlanStudiowActivity.java	(date 1554831562000)
++++ app/src/main/java/pl/krakow/up/ii/opensource/mobilewu/PlanStudiowActivity.java	(date 1554979957347)
+@@ -51,6 +51,7 @@
+     String[] listValueGodziny = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+     String[] listValueECTS = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+     String[] listValueFormaZal = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
++    String[] listValueDokumenty = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+     String[] listValueGrupa = new String[]{"1","2","3","4","5","6","7","8","9","10","12","13"};
+     String[] listValueTyp = new String[]{"1","2","3","4","5","6","7","8"};
+     final String page_url = "https://wu.up.krakow.pl/WU/";
+@@ -119,7 +120,7 @@
+             if (result != null){
+ 
+                 result.trim();
+-                String[] tabBadString = new String[]{"<tr","tbody","\n","/tr","/td","td","table"};
++                String[] tabBadString = new String[]{"<tr","tbody","\n","/tr","/td","td","span","table"};
+                 StringTokenizer stringTokenizer = new StringTokenizer(result);
+                 int p1=0,p2=0;
+                 while (stringTokenizer.hasMoreTokens()) {
+@@ -131,10 +132,11 @@
+                     p1=0;
+                 }
+                 System.out.println("\n\n\n");
++                System.out.println(list);
+                 //for (int j=0;j<list.size();j++){System.out.println(list.get(j));}
+                 //wybranie poszczegolnych elementow listy
+                 for (int j=0;j<list.size();j++){
+-                    if (j>0 && j+7<=list.size() && list.get(j-1).equals("tr class=\"gridDane\"")){
++                    if (j>0 && j+8<=list.size() && list.get(j-1).equals("tr class=\"gridDane\"")){
+                         System.out.println(list.get(j));
+                         listValue[p2]=list.get(j) + "\n" + list.get(j+1);
+                         listValueProwadzacy[p2]=list.get(j+2);
+@@ -142,7 +144,8 @@
+                         listValueGodziny[p2]=list.get(j+4);
+                         listValueECTS[p2]=list.get(j+5);
+                         listValueFormaZal[p2]=list.get(j+6);
+-                        listValueGrupa[p2]=list.get(j+7);
++                        listValueDokumenty[p2]=list.get(j+7);
++                        listValueGrupa[p2]=list.get(j+8);
+                         p2+=1;
+                     }
+                 }
+@@ -153,6 +156,7 @@
+                 for (String s:listValueGodziny){System.out.println(s);}
+                 for (String s:listValueECTS){System.out.println(s);}
+                 for (String s:listValueFormaZal){System.out.println(s);}
++                for (String s:listValueDokumenty){System.out.println(s);}
+                 for (String s:listValueGrupa){System.out.println(s);}
+                 for (String s:listValue){System.out.println(s);}
+                 adapter.notifyDataSetInvalidated();
+@@ -191,11 +195,12 @@
+                 Intent intent = new Intent(PlanStudiowActivity.this, PlanStudiowSecondActivity.class);
+                 intent.putExtra("IdNazwa",position);
+                 intent.putExtra("Nazwa",listValue[position]);
+-                intent.putExtra("Prowadzacy",listValueProwadzacy[position]);
+-                intent.putExtra("Forma zajec",listValueFormaZajec[position]);
++                intent.putExtra("Prowadzący",listValueProwadzacy[position]);
++                intent.putExtra("Forma zajęć",listValueFormaZajec[position]);
+                 intent.putExtra("Liczba godzin",listValueGodziny[position]);
+                 intent.putExtra("Pkt. ECTS",listValueECTS[position]);
+                 intent.putExtra("Forma zaliczenia",listValueFormaZal[position]);
++                intent.putExtra("Dokumenty",listValueDokumenty[position]);
+                 intent.putExtra("Grupa",listValueGrupa[position]);
+                 intent.putExtra("Typ",listValueTyp);
+                 startActivity(intent);

@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(v -> {
             String slogin = login.getText().toString();
             String spass = pass.getText().toString();
+
             simpleProgressBar.setVisibility(View.VISIBLE);
             String bodyParams = "ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtIdent=" + slogin + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24txtHaslo=" + spass
                     + "&ctl00%24ctl00%24ContentPlaceHolder%24MiddleContentPlaceHolder%24butLoguj=Zaloguj"

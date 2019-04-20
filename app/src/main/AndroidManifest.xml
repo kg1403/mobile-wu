@@ -17,6 +17,8 @@
         <activity android:name=".OcenyActivity" />
         <activity android:name=".PlanStudiowActivity" />
         <activity android:name=".PlanStudiowSecondActivity" />
+        <activity android:name=".PlanZajecSecondActivity"/>
+        <activity android:name=".PlanZajecActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
